@@ -1,321 +1,1121 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <title>Contact - Nikshep Karki</title>
-    <meta
-      name="description"
-      content="Get in touch with Nikshep Karki, a professional Graphic Designer, Video Editor, and Freelancer based in Kathmandu, Nepal. Contact for projects, inquiries, or collaborations."
-    />
-    <meta
-      name="keywords"
-      content="Nikshep Karki contact, contact graphic designer, contact video editor, freelance graphic designer Nepal, Kathmandu graphic designer, video editing services, graphic design freelancer, contact Nikshep Karki, graphic design contact form, creative freelancer contact, social media contact Nikshep Karki"
-    />
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact — Nikshep Karki | Video Producer, Graphic Designer, Digital Marketing Strategist</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,200;0,400;0,500;0,700;1,400&family=Playfair+Display:wght@400;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+  :root {
+    --bg: #0c0a09;
+    --bg-warm: #110f0d;
+    --fg: #f5f0eb;
+    --muted: #7a7068;
+    --accent: #e85d3a;
+    --accent-dim: #c44a2b;
+    --accent-glow: rgba(232, 93, 58, 0.15);
+    --card: #161311;
+    --border: #2d2825;
+    --surface: #1c1916;
+    --nav-bg: rgba(12, 10, 9, 0.65);
+  }
 
-    <!-- Favicons -->
-    <link href="assets/logo/N-logo.jpg" rel="icon" />
-    <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon" />
+  [data-theme="light"] {
+    --bg: #f8f6f4;
+    --bg-warm: #f2efec;
+    --fg: #1a1714;
+    --muted: #6b6560;
+    --accent: #d04e2b;
+    --accent-dim: #b8431f;
+    --accent-glow: rgba(208, 78, 43, 0.12);
+    --card: #ffffff;
+    --border: #e5e0db;
+    --surface: #f0ece8;
+    --nav-bg: rgba(248, 246, 244, 0.85);
+  }
 
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com" rel="preconnect" />
-    <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
-      rel="stylesheet"
-    />
+  * { margin: 0; padding: 0; box-sizing: border-box; }
 
-    <!-- Vendor CSS Files -->
-    <link
-      href="assets/vendor/bootstrap/css/bootstrap.min.css"
-      rel="stylesheet"
-    />
-    <link
-      href="assets/vendor/bootstrap-icons/bootstrap-icons.css"
-      rel="stylesheet"
-    />
-    <link href="assets/vendor/aos/aos.css" rel="stylesheet" />
-    <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet" />
-    <link
-      href="assets/vendor/glightbox/css/glightbox.min.css"
-      rel="stylesheet"
-    />
+  html {
+    scroll-behavior: smooth;
+    scrollbar-width: thin;
+    scrollbar-color: var(--accent-dim) var(--bg);
+  }
 
-    <!-- Main CSS File -->
-    <link href="assets/css/main.css" rel="stylesheet" />
-  </head>
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--fg);
+    overflow-x: hidden;
+    line-height: 1.65;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
 
-  <body class="contact-page">
-    <header id="header" class="header d-flex align-items-center fixed-top">
-      <div
-        class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between"
-      >
-        <a href="index.html" class="logo d-flex align-items-center">
-          <!-- Uncomment the line below if you also wish to use an image logo -->
-          <!-- <img src="assets/img/logo.png" alt=""> -->
-          <h1 class="sitename"><img src="./assets/logo/logo.png" alt="" /></h1>
-        </a>
+  .font-display { font-family: 'Playfair Display', serif; }
 
-        <nav id="navmenu" class="navmenu">
-          <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="about.html">About</a></li>
-            <!-- <li><a href="services.html">Services</a></li> -->
+  ::-webkit-scrollbar { width: 5px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--accent-dim); border-radius: 3px; }
 
-            <li><a href="contact.html" class="active">Contact</a></li>
-          </ul>
-          <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
-        </nav>
+  .grain-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 999;
+    pointer-events: none;
+    opacity: 0.035;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    background-size: 200px 200px;
+  }
+
+  #particle-canvas {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  .cursor-glow {
+    position: fixed;
+    width: 350px; height: 350px;
+    border-radius: 50%;
+    background: radial-gradient(circle, var(--accent-glow), transparent 70%);
+    pointer-events: none;
+    z-index: 1;
+    transform: translate(-50%, -50%);
+    transition: opacity 0.4s ease;
+  }
+
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    background: var(--nav-bg);
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.4s ease, box-shadow 0.4s ease, background 0.3s ease;
+  }
+
+  nav.scrolled {
+    border-bottom-color: var(--border);
+    box-shadow: 0 4px 40px rgba(0,0,0,0.4);
+  }
+
+  [data-theme="light"] nav.scrolled {
+    box-shadow: 0 4px 40px rgba(0,0,0,0.06);
+  }
+
+  nav a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.8rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition: color 0.3s ease;
+    position: relative;
+  }
+
+  nav a::after {
+    content: '';
+    position: absolute;
+    bottom: -4px; left: 0;
+    width: 0; height: 1px;
+    background: var(--accent);
+    transition: width 0.3s ease;
+  }
+
+  nav a:hover { color: var(--fg); }
+  nav a:hover::after { width: 100%; }
+  nav a.active { color: var(--accent); }
+  nav a.active::after { width: 100%; }
+
+  .theme-toggle {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.5rem 1rem;
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    cursor: pointer;
+    color: var(--muted);
+    font-size: 0.75rem;
+    font-family: 'DM Sans', sans-serif;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+  }
+
+  .theme-toggle:hover {
+    border-color: var(--accent-dim);
+    color: var(--fg);
+  }
+
+  .theme-toggle i {
+    color: var(--accent);
+    font-size: 0.85rem;
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(35px);
+    transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .reveal-d1 { transition-delay: 0.1s; }
+  .reveal-d2 { transition-delay: 0.2s; }
+  .reveal-d3 { transition-delay: 0.3s; }
+  .reveal-d4 { transition-delay: 0.4s; }
+  .reveal-d5 { transition-delay: 0.5s; }
+
+  .section-label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.25em;
+    color: var(--accent);
+    margin-bottom: 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .section-label::before {
+    content: '';
+    width: 24px; height: 1px;
+    background: var(--accent);
+  }
+
+  .section-heading {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 900;
+    line-height: 1.08;
+    margin-bottom: 1.5rem;
+  }
+
+  .form-input {
+    width: 100%;
+    padding: 0.9rem 1.15rem;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    color: var(--fg);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.92rem;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+    outline: none;
+  }
+
+  .form-input:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-glow);
+  }
+
+  .form-input::placeholder { color: var(--muted); }
+
+  select.form-input {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%237a7068' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10l-5 5z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    padding-right: 2.5rem;
+  }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.85rem 2rem;
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .btn-primary::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.15), transparent);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(232, 93, 58, 0.35);
+  }
+
+  .btn-primary:hover::before { opacity: 1; }
+  .btn-primary:active { transform: translateY(0); }
+
+  .btn-outline {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.85rem 2rem;
+    background: transparent;
+    color: var(--fg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+  }
+
+  .btn-outline:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    transform: translateY(-2px);
+  }
+
+  .toast {
+    position: fixed;
+    bottom: 2rem; right: 2rem;
+    background: var(--card);
+    border: 1px solid var(--accent-dim);
+    color: var(--fg);
+    padding: 1rem 1.5rem;
+    border-radius: 12px;
+    font-size: 0.88rem;
+    z-index: 200;
+    transform: translateY(120%);
+    opacity: 0;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  [data-theme="light"] .toast {
+    box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+  }
+
+  .toast.show { transform: translateY(0); opacity: 1; }
+  .toast i { color: var(--accent); }
+
+  .orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(90px);
+    pointer-events: none;
+    animation: orbFloat 10s ease-in-out infinite;
+  }
+
+  @keyframes orbFloat {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    33% { transform: translate(25px, -18px) scale(1.08); }
+    66% { transform: translate(-18px, 12px) scale(0.92); }
+  }
+
+  .footer-link {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.82rem;
+    transition: color 0.3s ease;
+  }
+  .footer-link:hover { color: var(--accent); }
+
+  .contact-info-card {
+    padding: 1.5rem;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .contact-info-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--accent-dim);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.3), 0 0 20px var(--accent-glow);
+  }
+
+  [data-theme="light"] .contact-info-card:hover {
+    box-shadow: 0 12px 40px rgba(0,0,0,0.06), 0 0 20px var(--accent-glow);
+  }
+
+  .contact-icon-wrap {
+    width: 48px; height: 48px;
+    border-radius: 12px;
+    background: var(--accent-glow);
+    border: 1px solid rgba(232, 93, 58, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--accent);
+    font-size: 1.1rem;
+    flex-shrink: 0;
+    transition: all 0.3s ease;
+  }
+
+  .contact-info-card:hover .contact-icon-wrap {
+    background: var(--accent);
+    color: #fff;
+    border-color: var(--accent);
+  }
+
+  .social-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 52px; height: 52px;
+    border-radius: 14px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    color: var(--muted);
+    font-size: 1.2rem;
+    text-decoration: none;
+    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .social-link:hover {
+    transform: translateY(-4px);
+    border-color: var(--accent-dim);
+    color: var(--accent);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.3), 0 0 20px var(--accent-glow);
+  }
+
+  [data-theme="light"] .social-link:hover {
+    box-shadow: 0 8px 25px rgba(0,0,0,0.06), 0 0 20px var(--accent-glow);
+  }
+
+  .map-placeholder {
+    width: 100%;
+    height: 280px;
+    border-radius: 14px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    color: var(--muted);
+    overflow: hidden;
+    position: relative;
+    transition: border-color 0.3s ease;
+  }
+
+  .map-placeholder:hover {
+    border-color: var(--accent-dim);
+  }
+
+  .map-placeholder .map-grid {
+    position: absolute;
+    inset: 0;
+    opacity: 0.06;
+    background-image:
+      linear-gradient(var(--muted) 1px, transparent 1px),
+      linear-gradient(90deg, var(--muted) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+
+  .map-pin {
+    width: 40px; height: 40px;
+    border-radius: 50% 50% 50% 0;
+    background: var(--accent);
+    transform: rotate(-45deg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 1;
+  }
+
+  .map-pin i {
+    transform: rotate(45deg);
+    color: #fff;
+    font-size: 0.9rem;
+  }
+
+  .map-pin::after {
+    content: '';
+    position: absolute;
+    bottom: -8px; left: 50%;
+    transform: translateX(-50%);
+    width: 20px; height: 6px;
+    background: rgba(0,0,0,0.15);
+    border-radius: 50%;
+    filter: blur(3px);
+  }
+
+  .faq-item {
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: border-color 0.3s ease;
+    background: var(--card);
+  }
+
+  .faq-item:hover, .faq-item.open {
+    border-color: var(--accent-dim);
+  }
+
+  .faq-question {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.15rem 1.5rem;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 0.95rem;
+    color: var(--fg);
+    background: none;
+    border: none;
+    width: 100%;
+    text-align: left;
+    font-family: 'DM Sans', sans-serif;
+    transition: color 0.3s ease;
+  }
+
+  .faq-question:hover { color: var(--accent); }
+
+  .faq-question i {
+    color: var(--accent);
+    font-size: 0.75rem;
+    transition: transform 0.3s ease;
+    flex-shrink: 0;
+    margin-left: 1rem;
+  }
+
+  .faq-item.open .faq-question i {
+    transform: rotate(180deg);
+  }
+
+  .faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .faq-answer-inner {
+    padding: 0 1.5rem 1.25rem;
+    color: var(--muted);
+    font-size: 0.9rem;
+    line-height: 1.7;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
+    .orb { animation: none; }
+  }
+
+  @media (max-width: 768px) {
+    .theme-toggle span { display: none; }
+    .social-link { width: 46px; height: 46px; font-size: 1.05rem; }
+    .map-placeholder { height: 200px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="grain-overlay" aria-hidden="true"></div>
+<div class="cursor-glow" id="cursorGlow" aria-hidden="true"></div>
+<canvas id="particle-canvas" aria-hidden="true"></canvas>
+
+<!-- Navigation -->
+<nav id="mainNav" role="navigation" aria-label="Main navigation">
+  <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+    <a href="https://www.nikshepkarki.com.np" style="color: var(--fg); text-decoration: none; font-weight: 700; font-size: 1rem; letter-spacing: -0.01em;">
+      NK<span style="color: var(--accent);">.</span>
+    </a>
+    <div class="hidden md:flex items-center gap-8">
+      <a href="https://www.nikshepkarki.com.np">Home</a>
+      <a href="https://www.nikshepkarki.com.np/#about">About</a>
+      <a href="https://www.nikshepkarki.com.np/#experience">Experience</a>
+      <a href="https://www.nikshepkarki.com.np/#skills">Skills</a>
+      <a href="contact.html" class="active">Contact</a>
+      <button id="themeToggle" class="theme-toggle" aria-label="Toggle theme">
+        <i class="fa-solid fa-moon" id="themeIcon"></i>
+        <span id="themeText">Dark Theme</span>
+      </button>
+    </div>
+    <div class="flex items-center gap-4 md:hidden">
+      <button id="themeToggleMobile" class="theme-toggle" aria-label="Toggle theme">
+        <i class="fa-solid fa-moon" id="themeIconMobile"></i>
+      </button>
+      <button id="mobileMenuBtn" class="text-lg" style="color: var(--muted); background: none; border: none; cursor: pointer;" aria-label="Toggle menu">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+    </div>
+  </div>
+  <div id="mobileMenu" class="md:hidden overflow-hidden" style="max-height: 0; transition: max-height 0.4s ease;">
+    <div class="px-6 pb-4 flex flex-col gap-4">
+      <a href="https://www.nikshepkarki.com.np" onclick="closeMobileMenu()">Home</a>
+      <a href="https://www.nikshepkarki.com.np/#about" onclick="closeMobileMenu()">About</a>
+      <a href="https://www.nikshepkarki.com.np/#experience" onclick="closeMobileMenu()">Experience</a>
+      <a href="https://www.nikshepkarki.com.np/#skills" onclick="closeMobileMenu()">Skills</a>
+      <a href="contact.html" onclick="closeMobileMenu()" style="color: var(--accent);">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<!-- Page Header -->
+<section class="relative z-10 pt-32 pb-16 md:pt-40 md:pb-20 overflow-hidden">
+  <div class="orb" style="width: 400px; height: 400px; background: rgba(232,93,58,0.06); top: -10%; right: -5%;" aria-hidden="true"></div>
+  <div class="orb" style="width: 250px; height: 250px; background: rgba(196,74,43,0.04); bottom: -5%; left: 5%; animation-delay: -5s;" aria-hidden="true"></div>
+
+  <div class="max-w-7xl mx-auto px-6 relative z-10">
+    <div class="reveal">
+      <p class="section-label">Get in Touch</p>
+    </div>
+    <h1 class="section-heading font-display reveal reveal-d1" style="font-size: clamp(2.5rem, 7vw, 5rem);">Let's create<br>something great</h1>
+    <p class="reveal reveal-d2" style="color: var(--muted); font-size: 1.05rem; max-width: 560px; margin-top: 1.25rem; line-height: 1.75;">
+      Whether you need cinematic video production, impactful graphic design, or a strategic digital marketing campaign — I'd love to hear about your project and bring your vision to life.
+    </p>
+
+    <!-- Social Links Row -->
+    <div class="reveal reveal-d3 flex flex-wrap gap-3 mt-8">
+      <a href="mailto:info.nikshepkarki@gmail.com" class="social-link" aria-label="Email">
+        <i class="fa-solid fa-envelope"></i>
+      </a>
+      <a href="https://www.facebook.com/nikshepkarki.np" target="_blank" class="social-link" aria-label="Facebook">
+        <i class="fa-brands fa-facebook-f"></i>
+      </a>
+      <a href="https://www.tiktok.com/@nikshepkarki" target="_blank" class="social-link" aria-label="TikTok">
+        <i class="fa-brands fa-tiktok"></i>
+      </a>
+      <a href="https://www.linkedin.com/in/nikshepkarki/" target="_blank" class="social-link" aria-label="LinkedIn">
+        <i class="fa-brands fa-linkedin-in"></i>
+      </a>
+      <a href="#" class="social-link" aria-label="Instagram">
+        <i class="fa-brands fa-instagram"></i>
+      </a>
+      <a href="#" class="social-link" aria-label="YouTube">
+        <i class="fa-brands fa-youtube"></i>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Divider -->
+<div style="height: 1px; background: var(--border); position: relative; z-index: 2;" aria-hidden="true"></div>
+
+<!-- Contact Info Cards -->
+<section class="relative z-10 py-16 md:py-20">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+      <div class="contact-info-card reveal">
+        <div class="flex items-start gap-4">
+          <div class="contact-icon-wrap">
+            <i class="fa-solid fa-envelope"></i>
+          </div>
+          <div>
+            <div style="font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 0.35rem;">Email</div>
+            <a href="mailto:info.nikshepkarki@gmail.com" style="color: var(--fg); text-decoration: none; font-size: 0.88rem; font-weight: 500; transition: color 0.3s ease; word-break: break-all;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--fg)'">info.nikshepkarki@gmail.com</a>
+          </div>
+        </div>
       </div>
-    </header>
-
-    <main class="main">
-      <!-- Page Title -->
-      <div class="page-title" data-aos="fade">
-        <div class="heading">
-          <div class="container">
-            <div class="row d-flex justify-content-center text-center">
-              <div class="col-lg-8">
-                <h1>Contact</h1>
-                <p class="mb-0">
-                  I would love to hear from you! Whether you have a project in
-                  mind, need assistance, or just want to say hello, feel free to
-                  get in touch. Fill out the form below or reach out through any
-                  of my social media channels.
-                </p>
-              </div>
-            </div>
+      <div class="contact-info-card reveal reveal-d1">
+        <div class="flex items-start gap-4">
+          <div class="contact-icon-wrap">
+            <i class="fa-solid fa-location-dot"></i>
           </div>
-        </div>
-        <nav class="breadcrumbs">
-          <div class="container">
-            <ol>
-              <li><a href="index.html">Home</a></li>
-              <li class="current">Contact</li>
-            </ol>
-          </div>
-        </nav>
-      </div>
-      <!-- End Page Title -->
-
-      <!-- Contact Section -->
-      <section id="contact" class="contact section">
-        <div class="container" data-aos="fade-up" data-aos-delay="100">
-          <div class="row gy-4">
-            <div class="col-md-6">
-              <div
-                class="info-item d-flex align-items-center"
-                data-aos="fade-up"
-                data-aos-delay="200"
-              >
-                <i class="icon bi bi-geo-alt flex-shrink-0"></i>
-                <div>
-                  <h3>Address</h3>
-                  <p>Kathmandu, Nepal</p>
-                </div>
-              </div>
-            </div>
-            <!-- End Info Item -->
-
-            <div class="col-md-6">
-              <div
-                class="info-item d-flex align-items-center"
-                data-aos="fade-up"
-                data-aos-delay="300"
-              >
-                <i class="icon bi bi-telephone flex-shrink-0"></i>
-                <div>
-                  <h3>Call Me</h3>
-                  <p>+977 9745452339</p>
-                </div>
-              </div>
-            </div>
-            <!-- End Info Item -->
-
-            <div class="col-md-6">
-              <div
-                class="info-item d-flex align-items-center"
-                data-aos="fade-up"
-                data-aos-delay="400"
-              >
-                <i class="icon bi bi-envelope flex-shrink-0"></i>
-                <div>
-                  <h3>Email Us</h3>
-                  <p>info.nikshepkarki@gmail.com</p>
-                </div>
-              </div>
-            </div>
-            <!-- End Info Item -->
-
-            <div class="col-md-6">
-              <div
-                class="info-item d-flex align-items-center"
-                data-aos="fade-up"
-                data-aos-delay="500"
-              >
-                <i class="icon bi bi-share flex-shrink-0"></i>
-                <div>
-                  <h3>Social Profiles</h3>
-                  <div class="social-links">
-                    <a href="https://x.com/nikshep_karki" target="_blank"
-                      ><i class="bi bi-twitter-x"></i
-                    ></a>
-                    <a
-                      href="https://www.facebook.com/nikshepkarki.np"
-                      target="_blank"
-                      ><i class="bi bi-facebook"></i
-                    ></a>
-                    <a
-                      href="https://youtube.com/@nikshepkarki?si=Je-qkSJdmINoJaLI"
-                      target="_blank"
-                      ><i class="bi bi-youtube"></i
-                    ></a>
-                    <a
-                      href="https://www.tiktok.com/@nikshepkarki.com.np"
-                      target="_blank"
-                      ><i class="bi bi-tiktok"></i
-                    ></a>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <!-- End Info Item -->
-          </div>
-
-          <form
-            action="forms/contact.php"
-            method="post"
-            class="php-email-form"
-            data-aos="fade-up"
-            data-aos-delay="600"
-          >
-            <div class="row gy-4">
-              <div class="col-md-6">
-                <input
-                  type="text"
-                  name="name"
-                  class="form-control"
-                  placeholder="Your Name"
-                  required=""
-                />
-              </div>
-
-              <div class="col-md-6">
-                <input
-                  type="email"
-                  class="form-control"
-                  name="email"
-                  placeholder="Your Email"
-                  required=""
-                />
-              </div>
-
-              <div class="col-md-12">
-                <input
-                  type="text"
-                  class="form-control"
-                  name="subject"
-                  placeholder="Subject"
-                  required=""
-                />
-              </div>
-
-              <div class="col-md-12">
-                <textarea
-                  class="form-control"
-                  name="message"
-                  rows="6"
-                  placeholder="Message"
-                  required=""
-                ></textarea>
-              </div>
-
-              <div class="col-md-12 text-center">
-                <div class="loading">Loading</div>
-                <div class="error-message"></div>
-                <div class="sent-message">
-                  Your message has been sent. Thank you!
-                </div>
-
-                <button type="submit">Send Message</button>
-              </div>
-            </div>
-          </form>
-          <!-- End Contact Form -->
-        </div>
-      </section>
-      <!-- /Contact Section -->
-    </main>
-
-    <footer id="footer" class="footer dark-background">
-      <div class="container">
-        <h3 class="sitename">Nikshep Karki</h3>
-        <p>
-          Professional Graphic Designer, Video Editor, and Freelancer. Let’s
-          create something amazing together!
-        </p>
-
-        <!-- Social Links -->
-        <div class="social-links d-flex justify-content-center">
-          <a href="https://x.com/nikshep_karki" target="_blank"
-            ><i class="bi bi-twitter"></i
-          ></a>
-          <a href="https://www.facebook.com/nikshepkarki.np" target="_blank"
-            ><i class="bi bi-facebook"></i
-          ></a>
-          <a
-            href="https://youtube.com/@nikshepkarki?si=Je-qkSJdmINoJaLI"
-            target="_blank"
-            ><i class="bi bi-youtube"></i
-          ></a>
-          <a href="@nikshepkarki" target="_blank"
-            ><i class="bi bi-tiktok"></i
-          ></a>
-        </div>
-
-        <!-- Contact Information -->
-        <div class="contact-info">
-          <p>
-            Email:
-            <a href="mailto:contact@nikshepkarki.com">nikshepkarki@gmail.com</a>
-          </p>
-          <p>Phone: +977 9745452339</p>
-        </div>
-
-        <!-- Copyright and Credits -->
-        <div class="container">
-          <div class="copyright">
-            <span>&copy; 2024</span>
-            <strong class="px-1 sitename">Nikshep Karki</strong>
-            <span>All Rights Reserved.</span>
+          <div>
+            <div style="font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 0.35rem;">Location</div>
+            <p style="color: var(--fg); font-size: 0.88rem; font-weight: 500;">Lamjung & Kathmandu</p>
+            <p style="color: var(--muted); font-size: 0.8rem;">Nepal</p>
           </div>
         </div>
       </div>
-    </footer>
-    <!-- Scroll Top -->
-    <a
-      href="#"
-      id="scroll-top"
-      class="scroll-top d-flex align-items-center justify-content-center"
-      ><i class="bi bi-arrow-up-short"></i
-    ></a>
+      <div class="contact-info-card reveal reveal-d2">
+        <div class="flex items-start gap-4">
+          <div class="contact-icon-wrap">
+            <i class="fa-solid fa-briefcase"></i>
+          </div>
+          <div>
+            <div style="font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 0.35rem;">Availability</div>
+            <p style="color: var(--fg); font-size: 0.88rem; font-weight: 500;">Freelance & Contract</p>
+            <p style="color: var(--muted); font-size: 0.8rem;">Open to new projects</p>
+          </div>
+        </div>
+      </div>
+      <div class="contact-info-card reveal reveal-d3">
+        <div class="flex items-start gap-4">
+          <div class="contact-icon-wrap">
+            <i class="fa-solid fa-clock"></i>
+          </div>
+          <div>
+            <div style="font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 0.35rem;">Response Time</div>
+            <p style="color: var(--fg); font-size: 0.88rem; font-weight: 500;">Within 24 Hours</p>
+            <p style="color: var(--muted); font-size: 0.8rem;">Usually much sooner</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <!-- Preloader -->
-    <div id="preloader"></div>
+<!-- Contact Form + Map -->
+<section class="relative z-10 pb-20 md:pb-28">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="grid grid-cols-1 lg:grid-cols-5 gap-10 lg:gap-16">
 
-    <!-- Vendor JS Files -->
-    <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="assets/vendor/php-email-form/validate.js"></script>
-    <script src="assets/vendor/aos/aos.js"></script>
-    <script src="assets/vendor/typed.js/typed.umd.js"></script>
-    <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
-    <script src="assets/vendor/waypoints/noframework.waypoints.js"></script>
-    <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
-    <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
-    <script src="assets/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
-    <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+      <!-- Form -->
+      <div class="lg:col-span-3">
+        <div class="reveal">
+          <p class="section-label">Send a Message</p>
+          <h2 class="section-heading font-display" style="font-size: clamp(1.5rem, 3vw, 2.2rem);">Tell me about<br>your project</h2>
+        </div>
 
-    <!-- Main JS File -->
-    <script src="assets/js/main.js"></script>
-  </body>
+        <form id="contactForm" class="reveal reveal-d1 flex flex-col gap-5 mt-8" novalidate>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+            <div>
+              <label for="nameInput" class="block text-sm mb-2" style="color: var(--muted);">Your Name <span style="color: var(--accent);">*</span></label>
+              <input type="text" id="nameInput" class="form-input" placeholder="Full name" required aria-required="true">
+              <p class="form-error text-sm mt-1" style="color: #e85050; display: none;"></p>
+            </div>
+            <div>
+              <label for="emailInput" class="block text-sm mb-2" style="color: var(--muted);">Email Address <span style="color: var(--accent);">*</span></label>
+              <input type="email" id="emailInput" class="form-input" placeholder="you@example.com" required aria-required="true">
+              <p class="form-error text-sm mt-1" style="color: #e85050; display: none;"></p>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+            <div>
+              <label for="phoneInput" class="block text-sm mb-2" style="color: var(--muted);">Phone Number</label>
+              <input type="tel" id="phoneInput" class="form-input" placeholder="+977 XXXXXXXXXX">
+            </div>
+            <div>
+              <label for="projectType" class="block text-sm mb-2" style="color: var(--muted);">Project Type <span style="color: var(--accent);">*</span></label>
+              <select id="projectType" class="form-input" style="cursor: pointer;" required>
+                <option value="" style="background: var(--card);">Select a category</option>
+                <option value="video" style="background: var(--card);">Video Production</option>
+                <option value="graphic" style="background: var(--card);">Graphic Design</option>
+                <option value="marketing" style="background: var(--card);">Digital Marketing</option>
+                <option value="branding" style="background: var(--card);">Brand Identity</option>
+                <option value="campaign" style="background: var(--card);">Political Campaign</option>
+                <option value="motion" style="background: var(--card);">Motion Graphics</option>
+                <option value="social" style="background: var(--card);">Social Media Management</option>
+                <option value="other" style="background: var(--card);">Other</option>
+              </select>
+              <p class="form-error text-sm mt-1" style="color: #e85050; display: none;"></p>
+            </div>
+          </div>
+
+          <div>
+            <label for="budgetRange" class="block text-sm mb-2" style="color: var(--muted);">Budget Range</label>
+            <select id="budgetRange" class="form-input" style="cursor: pointer;">
+              <option value="" style="background: var(--card);">Select your budget</option>
+              <option value="small" style="background: var(--card);">Under NPR 10,000</option>
+              <option value="medium" style="background: var(--card);">NPR 10,000 — NPR 50,000</option>
+              <option value="large" style="background: var(--card);">NPR 50,000 — NPR 2,00,000</option>
+              <option value="enterprise" style="background: var(--card);">NPR 2,00,000+</option>
+              <option value="discuss" style="background: var(--card);">Let's discuss</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="messageInput" class="block text-sm mb-2" style="color: var(--muted);">Project Details <span style="color: var(--accent);">*</span></label>
+            <textarea id="messageInput" class="form-input" rows="6" placeholder="Tell me about your project, goals, timeline, and any specific requirements..." required aria-required="true" style="resize: vertical; min-height: 140px;"></textarea>
+            <p class="form-error text-sm mt-1" style="color: #e85050; display: none;"></p>
+          </div>
+
+          <div class="flex flex-col sm:flex-row gap-4 mt-2">
+            <button type="submit" class="btn-primary">
+              Send Message <i class="fa-solid fa-paper-plane text-sm"></i>
+            </button>
+            <a href="mailto:info.nikshepkarki@gmail.com" class="btn-outline" style="display: inline-flex;">
+              <i class="fa-solid fa-envelope text-sm"></i> Or email directly
+            </a>
+          </div>
+        </form>
+      </div>
+
+      <!-- Sidebar: Map + Socials + FAQ -->
+      <div class="lg:col-span-2 flex flex-col gap-8">
+
+        <!-- Map Placeholder -->
+        <div class="reveal reveal-d1">
+          <div class="map-placeholder">
+            <div class="map-grid" aria-hidden="true"></div>
+            <div class="map-pin">
+              <i class="fa-solid fa-location-dot"></i>
+            </div>
+            <p style="font-size: 0.9rem; font-weight: 500; color: var(--fg); position: relative; z-index: 1;">Lamjung & Kathmandu</p>
+            <p style="font-size: 0.78rem; position: relative; z-index: 1;">Nepal</p>
+          </div>
+        </div>
+
+        <!-- Social Media Connect -->
+        <div class="reveal reveal-d2">
+          <p style="font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.2em; color: var(--muted); margin-bottom: 1rem;">Connect with me</p>
+          <div class="flex flex-col gap-3">
+            <a href="mailto:info.nikshepkarki@gmail.com" style="display: flex; align-items: center; gap: 1rem; padding: 0.9rem 1.15rem; background: var(--card); border: 1px solid var(--border); border-radius: 12px; text-decoration: none; color: var(--fg); transition: all 0.3s ease;" onmouseover="this.style.borderColor='var(--accent-dim)';this.style.transform='translateX(4px)'" onmouseout="this.style.borderColor='var(--border)';this.style.transform='translateX(0)'">
+              <i class="fa-solid fa-envelope" style="color: var(--accent); width: 20px; text-align: center;"></i>
+              <div>
+                <div style="font-size: 0.88rem; font-weight: 500;">Email</div>
+                <div style="font-size: 0.75rem; color: var(--muted); word-break: break-all;">info.nikshepkarki@gmail.com</div>
+              </div>
+              <i class="fa-solid fa-arrow-right" style="margin-left: auto; font-size: 0.7rem; color: var(--muted);"></i>
+            </a>
+            <a href="https://www.tiktok.com/@nikshepkarki" target="_blank" style="display: flex; align-items: center; gap: 1rem; padding: 0.9rem 1.15rem; background: var(--card); border: 1px solid var(--border); border-radius: 12px; text-decoration: none; color: var(--fg); transition: all 0.3s ease;" onmouseover="this.style.borderColor='var(--accent-dim)';this.style.transform='translateX(4px)'" onmouseout="this.style.borderColor='var(--border)';this.style.transform='translateX(0)'">
+              <i class="fa-brands fa-tiktok" style="color: var(--accent); width: 20px; text-align: center;"></i>
+              <div>
+                <div style="font-size: 0.88rem; font-weight: 500;">TikTok</div>
+                <div style="font-size: 0.75rem; color: var(--muted);">@nikshepkarki</div>
+              </div>
+              <i class="fa-solid fa-arrow-right" style="margin-left: auto; font-size: 0.7rem; color: var(--muted);"></i>
+            </a>
+            <a href="https://www.linkedin.com/in/nikshepkarki/" target="_blank" style="display: flex; align-items: center; gap: 1rem; padding: 0.9rem 1.15rem; background: var(--card); border: 1px solid var(--border); border-radius: 12px; text-decoration: none; color: var(--fg); transition: all 0.3s ease;" onmouseover="this.style.borderColor='var(--accent-dim)';this.style.transform='translateX(4px)'" onmouseout="this.style.borderColor='var(--border)';this.style.transform='translateX(0)'">
+              <i class="fa-brands fa-linkedin-in" style="color: var(--accent); width: 20px; text-align: center;"></i>
+              <div>
+                <div style="font-size: 0.88rem; font-weight: 500;">LinkedIn</div>
+                <div style="font-size: 0.75rem; color: var(--muted);">nikshepkarki</div>
+              </div>
+              <i class="fa-solid fa-arrow-right" style="margin-left: auto; font-size: 0.7rem; color: var(--muted);"></i>
+            </a>
+            <a href="https://www.facebook.com/nikshepkarki.np" target="_blank" style="display: flex; align-items: center; gap: 1rem; padding: 0.9rem 1.15rem; background: var(--card); border: 1px solid var(--border); border-radius: 12px; text-decoration: none; color: var(--fg); transition: all 0.3s ease;" onmouseover="this.style.borderColor='var(--accent-dim)';this.style.transform='translateX(4px)'" onmouseout="this.style.borderColor='var(--border)';this.style.transform='translateX(0)'">
+              <i class="fa-brands fa-facebook-f" style="color: var(--accent); width: 20px; text-align: center;"></i>
+              <div>
+                <div style="font-size: 0.88rem; font-weight: 500;">Facebook</div>
+                <div style="font-size: 0.75rem; color: var(--muted);">nikshepkarki.np</div>
+              </div>
+              <i class="fa-solid fa-arrow-right" style="margin-left: auto; font-size: 0.7rem; color: var(--muted);"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- FAQ -->
+        <div class="reveal reveal-d3">
+          <p style="font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.2em; color: var(--muted); margin-bottom: 1rem;">Common Questions</p>
+          <div class="flex flex-col gap-3">
+            <div class="faq-item">
+              <button class="faq-question" aria-expanded="false" onclick="toggleFaq(this)">
+                What types of projects do you take on?
+                <i class="fa-solid fa-chevron-down"></i>
+              </button>
+              <div class="faq-answer">
+                <div class="faq-answer-inner">I work on video production, graphic design, brand identity, social media marketing, digital campaigns, motion graphics, and political communication projects. Whether it's a single design or a full campaign, I'm flexible to your needs.</div>
+              </div>
+            </div>
+            <div class="faq-item">
+              <button class="faq-question" aria-expanded="false" onclick="toggleFaq(this)">
+                What is your typical turnaround time?
+                <i class="fa-solid fa-chevron-down"></i>
+              </button>
+              <div class="faq-answer">
+                <div class="faq-answer-inner">It depends on the project scope. Simple designs can be delivered in 1-3 days, while video production or full marketing campaigns may take 1-4 weeks. I always discuss timelines upfront before starting.</div>
+              </div>
+            </div>
+            <div class="faq-item">
+              <button class="faq-question" aria-expanded="false" onclick="toggleFaq(this)">
+                Do you work with clients outside Kathmandu?
+                <i class="fa-solid fa-chevron-down"></i>
+              </button>
+              <div class="faq-answer">
+                <div class="faq-answer-inner">Absolutely. I work with clients across Nepal and internationally. Most of my work is done digitally, so location is not a barrier. I'm based between Lamjung and Kathmandu but available for on-site projects as needed.</div>
+              </div>
+            </div>
+            <div class="faq-item">
+              <button class="faq-question" aria-expanded="false" onclick="toggleFaq(this)">
+                How do we start working together?
+                <i class="fa-solid fa-chevron-down"></i>
+              </button>
+              <div class="faq-answer">
+                <div class="faq-answer-inner">Simply fill out the contact form or email me directly. We'll schedule a call or chat to discuss your project, goals, and timeline. After that, I'll provide a proposal with scope, deliverables, and pricing.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="relative z-10 py-8 border-t" style="border-color: var(--border);">
+  <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4">
+    <p style="color: var(--muted); font-size: 0.78rem;">
+      © 2024 Nikshep Karki. All rights reserved.
+    </p>
+    <div class="flex items-center gap-6">
+      <a href="https://www.nikshepkarki.com.np" class="footer-link">Home</a>
+      <a href="mailto:info.nikshepkarki@gmail.com" class="footer-link">Email</a>
+      <a href="https://www.linkedin.com/in/nikshepkarki/" target="_blank" class="footer-link">LinkedIn</a>
+    </div>
+  </div>
+</footer>
+
+<!-- Toast Notification -->
+<div class="toast" id="toast" role="alert" aria-live="polite">
+  <i class="fa-solid fa-circle-check"></i>
+  <span id="toastMessage">Message sent successfully!</span>
+</div>
+
+<script>
+// Theme Toggle
+function initTheme() {
+  const savedTheme = localStorage.getItem('theme') || 'dark';
+  document.documentElement.setAttribute('data-theme', savedTheme);
+  updateThemeUI(savedTheme);
+}
+
+function toggleTheme() {
+  const currentTheme = document.documentElement.getAttribute('data-theme');
+  const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', newTheme);
+  localStorage.setItem('theme', newTheme);
+  updateThemeUI(newTheme);
+}
+
+function updateThemeUI(theme) {
+  const icon = document.getElementById('themeIcon');
+  const iconMobile = document.getElementById('themeIconMobile');
+  const text = document.getElementById('themeText');
+  if (theme === 'light') {
+    if (icon) icon.className = 'fa-solid fa-sun';
+    if (iconMobile) iconMobile.className = 'fa-solid fa-sun';
+    if (text) text.textContent = 'Light Theme';
+  } else {
+    if (icon) icon.className = 'fa-solid fa-moon';
+    if (iconMobile) iconMobile.className = 'fa-solid fa-moon';
+    if (text) text.textContent = 'Dark Theme';
+  }
+}
+
+initTheme();
+document.getElementById('themeToggle').addEventListener('click', toggleTheme);
+document.getElementById('themeToggleMobile').addEventListener('click', toggleTheme);
+
+// Mobile Menu
+const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+const mobileMenu = document.getElementById('mobileMenu');
+let menuOpen = false;
+
+mobileMenuBtn.addEventListener('click', () => {
+  menuOpen = !menuOpen;
+  if (menuOpen) {
+    mobileMenu.style.maxHeight = '300px';
+    mobileMenuBtn.innerHTML = '<i class="fa-solid fa-xmark"></i>';
+  } else {
+    closeMobileMenu();
+  }
+});
+
+function closeMobileMenu() {
+  menuOpen = false;
+  mobileMenu.style.maxHeight = '0';
+  mobileMenuBtn.innerHTML = '<i class="fa-solid fa-bars"></i>';
+}
+
+// Nav scroll effect
+const mainNav = document.getElementById('mainNav');
+window.addEventListener('scroll', () => {
+  if (window.scrollY > 50) {
+    mainNav.classList.add('scrolled');
+  } else {
+    mainNav.classList.remove('scrolled');
+  }
+});
+
+// Reveal on Scroll
+const revealElements = document.querySelectorAll('.reveal');
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+revealElements.forEach(el => revealObserver.observe(el));
+
+// Cursor glow
+const cursorGlow = document.getElementById('cursorGlow');
+let mouseX = 0, mouseY = 0, glowX = 0, glowY = 0;
+
+document.addEventListener('mousemove', (e) => {
+  mouseX = e.clientX;
+  mouseY = e.clientY;
+});
+
+function animateGlow() {
+  glowX += (mouseX - glowX) * 0.15;
+  glowY += (mouseY - glowY) * 0.15;
+  cursorGlow.style.left = glowX + 'px';
+  cursorGlow.style.top = glowY + 'px';
+  requestAnimationFrame(animateGlow);
+}
+animateGlow();
+
+// Particle Canvas
+const canvas = document.getElementById('particle-canvas');
+const ctx = canvas.getContext('2d');
+
+function resizeCanvas() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+resizeCanvas();
+window.addEventListener('resize', resizeCanvas);
+
+class Particle {
+  constructor() { this.reset(); }
+  reset() {
+    this.x = Math.random() * canvas.width;
+    this.y = Math.random() * canvas.height;
+    this.size = Math.random() * 1.5 + 0.5;
+    this.speedX = (Math.random() - 0.5) * 0.3;
+    this.speedY = (Math.random() - 0.5) * 0.3;
+    this.opacity = Math.random() * 0.3 + 0.1;
+  }
+  update() {
+    this.x += this.speedX;
+    this.y += this.speedY;
+    if (this.x < 0 || this.x > canvas.width || this.y < 0 || this.y > canvas.height) this.reset();
+  }
+  draw() {
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(232, 93, 58, ${this.opacity})`;
+    ctx.fill();
+  }
+}
+
+const particles = [];
+for (let i = 0; i < 50; i++) particles.push(new Particle());
+
+function animateParticles() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  particles.forEach(p => { p.update(); p.draw(); });
+  requestAnimationFrame(animateParticles);
+}
+animateParticles();
+
+// FAQ Toggle
+function toggleFaq(btn) {
+  const item = btn.parentElement;
+  const answer = item.querySelector('.faq-answer');
+  const isOpen = item.classList.contains('open');
+
+  // Close all
+  document.querySelectorAll('.faq-item').forEach(faq => {
+    faq.classList.remove('open');
+    faq.querySelector('.faq-answer').style.maxHeight = '0';
+    faq.querySelector('.faq-question').setAttribute('aria-expanded', 'false');
+  });
+
+  // Open clicked if was closed
+  if (!isOpen) {
+    item.classList.add('open');
+    answer.style.maxHeight = answer.scrollHeight + 'px';
+    btn.setAttribute('aria-expanded', 'true');
+  }
+}
+
+// Form validation and submission
+const contactForm = document.getElementById('contactForm');
+const toast = document.getElementById('toast');
+const toastMessage = document.getElementById('toastMessage');
+
+function showError(input, message) {
+  const error = input.parentElement.querySelector('.form-error');
+  if (error) {
+    error.textContent = message;
+    error.style.display = 'block';
+  }
+  input.style.borderColor = '#e85050';
+}
+
+function clearError(input) {
+  const error = input.parentElement.querySelector('.form-error');
+  if (error) error.style.display = 'none';
+  input.style.borderColor = 'var(--border)';
+}
+
+function showToast(message, isError) {
+  toastMessage.textContent = message;
+  const icon = toast.querySelector('i');
+  if (isError) {
+    icon.className = 'fa-solid fa-circle-exclamation';
+    toast.style.borderColor = '#e85050';
+  } else {
+    icon.className = 'fa-solid fa-circle-check';
+    toast.style.borderColor = 'var(--accent-dim)';
+  }
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 4000);
+}
+
+contactForm.addEventListener('submit', (e) => {
+  e.preventDefault();
+  let isValid = true;
+
+  const name = document.getElementById('nameInput');
+  const email = document.getElementById('emailInput');
+  const projectType = document.getElementById('projectType');
+  const message = document.getElementById('messageInput');
+
+  clearError(name);
+  clearError(email);
+  clearError(projectType);
+  clearError(message);
+
+  if (name.value.trim().length < 2) {
+    showError(name, 'Please enter your full name');
+    isValid = false;
+  }
+
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(email.value.trim())) {
+    showError(email, 'Please enter a valid email address');
+    isValid = false;
+  }
+
+  if (!projectType.value) {
+    showError(projectType, 'Please select a project category');
+    isValid = false;
+  }
+
+  if (message.value.trim().length < 10) {
+    showError(message, 'Please provide more details (at least 10 characters)');
+    isValid = false;
+  }
+
+  if (isValid) {
+    const submitBtn = contactForm.querySelector('button[type="submit"]');
+    submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Sending...';
+    submitBtn.disabled = true;
+
+    setTimeout(() => {
+      showToast("Message sent successfully! I'll get back to you soon.");
+      contactForm.reset();
+      submitBtn.innerHTML = 'Send Message <i class="fa-solid fa-paper-plane text-sm"></i>';
+      submitBtn.disabled = false;
+    }, 1500);
+  } else {
+    showToast('Please fix the errors in the form', true);
+  }
+});
+
+document.querySelectorAll('.form-input').forEach(input => {
+  input.addEventListener('input', () => clearError(input));
+});
+</script>
+</body>
 </html>
