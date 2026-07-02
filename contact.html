@@ -264,6 +264,13 @@
   .btn-primary:hover::before { opacity: 1; }
   .btn-primary:active { transform: translateY(0); }
 
+  .btn-primary:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+    transform: none !important;
+    box-shadow: none !important;
+  }
+
   .btn-outline {
     display: inline-flex;
     align-items: center;
@@ -304,6 +311,7 @@
     display: flex;
     align-items: center;
     gap: 0.75rem;
+    max-width: 400px;
   }
 
   [data-theme="light"] .toast {
@@ -311,7 +319,9 @@
   }
 
   .toast.show { transform: translateY(0); opacity: 1; }
-  .toast i { color: var(--accent); }
+  .toast i { color: var(--accent); flex-shrink: 0; }
+  .toast.toast-error { border-color: #e85050; }
+  .toast.toast-error i { color: #e85050; }
 
   .orb {
     position: absolute;
@@ -415,9 +425,7 @@
     transition: border-color 0.3s ease;
   }
 
-  .map-placeholder:hover {
-    border-color: var(--accent-dim);
-  }
+  .map-placeholder:hover { border-color: var(--accent-dim); }
 
   .map-placeholder .map-grid {
     position: absolute;
@@ -466,9 +474,7 @@
     background: var(--card);
   }
 
-  .faq-item:hover, .faq-item.open {
-    border-color: var(--accent-dim);
-  }
+  .faq-item:hover, .faq-item.open { border-color: var(--accent-dim); }
 
   .faq-question {
     display: flex;
@@ -497,9 +503,7 @@
     margin-left: 1rem;
   }
 
-  .faq-item.open .faq-question i {
-    transform: rotate(180deg);
-  }
+  .faq-item.open .faq-question i { transform: rotate(180deg); }
 
   .faq-answer {
     max-height: 0;
@@ -514,6 +518,25 @@
     line-height: 1.7;
   }
 
+  .setup-notice {
+    padding: 1rem 1.25rem;
+    background: rgba(232, 93, 58, 0.08);
+    border: 1px solid rgba(232, 93, 58, 0.25);
+    border-radius: 10px;
+    font-size: 0.82rem;
+    color: var(--muted);
+    line-height: 1.6;
+    display: none;
+  }
+
+  .setup-notice a {
+    color: var(--accent);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  .setup-notice.visible { display: block; }
+
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after {
       animation-duration: 0.01ms !important;
@@ -526,6 +549,7 @@
     .theme-toggle span { display: none; }
     .social-link { width: 46px; height: 46px; font-size: 1.05rem; }
     .map-placeholder { height: 200px; }
+    .toast { left: 1rem; right: 1rem; bottom: 1rem; max-width: none; }
   }
 </style>
 </head>
@@ -585,32 +609,17 @@
     <p class="reveal reveal-d2" style="color: var(--muted); font-size: 1.05rem; max-width: 560px; margin-top: 1.25rem; line-height: 1.75;">
       Whether you need cinematic video production, impactful graphic design, or a strategic digital marketing campaign — I'd love to hear about your project and bring your vision to life.
     </p>
-
-    <!-- Social Links Row -->
     <div class="reveal reveal-d3 flex flex-wrap gap-3 mt-8">
-      <a href="mailto:info.nikshepkarki@gmail.com" class="social-link" aria-label="Email">
-        <i class="fa-solid fa-envelope"></i>
-      </a>
-      <a href="https://www.facebook.com/nikshepkarki.np" target="_blank" class="social-link" aria-label="Facebook">
-        <i class="fa-brands fa-facebook-f"></i>
-      </a>
-      <a href="https://www.tiktok.com/@nikshepkarki" target="_blank" class="social-link" aria-label="TikTok">
-        <i class="fa-brands fa-tiktok"></i>
-      </a>
-      <a href="https://www.linkedin.com/in/nikshepkarki/" target="_blank" class="social-link" aria-label="LinkedIn">
-        <i class="fa-brands fa-linkedin-in"></i>
-      </a>
-      <a href="#" class="social-link" aria-label="Instagram">
-        <i class="fa-brands fa-instagram"></i>
-      </a>
-      <a href="#" class="social-link" aria-label="YouTube">
-        <i class="fa-brands fa-youtube"></i>
-      </a>
+      <a href="mailto:info.nikshepkarki@gmail.com" class="social-link" aria-label="Email"><i class="fa-solid fa-envelope"></i></a>
+      <a href="https://www.facebook.com/nikshepkarki.np" target="_blank" class="social-link" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+      <a href="https://www.tiktok.com/@nikshepkarki" target="_blank" class="social-link" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+      <a href="https://www.linkedin.com/in/nikshepkarki/" target="_blank" class="social-link" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+      <a href="#" class="social-link" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+      <a href="#" class="social-link" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
     </div>
   </div>
 </section>
 
-<!-- Divider -->
 <div style="height: 1px; background: var(--border); position: relative; z-index: 2;" aria-hidden="true"></div>
 
 <!-- Contact Info Cards -->
@@ -619,9 +628,7 @@
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
       <div class="contact-info-card reveal">
         <div class="flex items-start gap-4">
-          <div class="contact-icon-wrap">
-            <i class="fa-solid fa-envelope"></i>
-          </div>
+          <div class="contact-icon-wrap"><i class="fa-solid fa-envelope"></i></div>
           <div>
             <div style="font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 0.35rem;">Email</div>
             <a href="mailto:info.nikshepkarki@gmail.com" style="color: var(--fg); text-decoration: none; font-size: 0.88rem; font-weight: 500; transition: color 0.3s ease; word-break: break-all;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--fg)'">info.nikshepkarki@gmail.com</a>
@@ -630,9 +637,7 @@
       </div>
       <div class="contact-info-card reveal reveal-d1">
         <div class="flex items-start gap-4">
-          <div class="contact-icon-wrap">
-            <i class="fa-solid fa-location-dot"></i>
-          </div>
+          <div class="contact-icon-wrap"><i class="fa-solid fa-location-dot"></i></div>
           <div>
             <div style="font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 0.35rem;">Location</div>
             <p style="color: var(--fg); font-size: 0.88rem; font-weight: 500;">Lamjung & Kathmandu</p>
@@ -642,9 +647,7 @@
       </div>
       <div class="contact-info-card reveal reveal-d2">
         <div class="flex items-start gap-4">
-          <div class="contact-icon-wrap">
-            <i class="fa-solid fa-briefcase"></i>
-          </div>
+          <div class="contact-icon-wrap"><i class="fa-solid fa-briefcase"></i></div>
           <div>
             <div style="font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 0.35rem;">Availability</div>
             <p style="color: var(--fg); font-size: 0.88rem; font-weight: 500;">Freelance & Contract</p>
@@ -654,9 +657,7 @@
       </div>
       <div class="contact-info-card reveal reveal-d3">
         <div class="flex items-start gap-4">
-          <div class="contact-icon-wrap">
-            <i class="fa-solid fa-clock"></i>
-          </div>
+          <div class="contact-icon-wrap"><i class="fa-solid fa-clock"></i></div>
           <div>
             <div style="font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 0.35rem;">Response Time</div>
             <p style="color: var(--fg); font-size: 0.88rem; font-weight: 500;">Within 24 Hours</p>
@@ -668,7 +669,7 @@
   </div>
 </section>
 
-<!-- Contact Form + Map -->
+<!-- Contact Form + Sidebar -->
 <section class="relative z-10 pb-20 md:pb-28">
   <div class="max-w-7xl mx-auto px-6">
     <div class="grid grid-cols-1 lg:grid-cols-5 gap-10 lg:gap-16">
@@ -680,16 +681,28 @@
           <h2 class="section-heading font-display" style="font-size: clamp(1.5rem, 3vw, 2.2rem);">Tell me about<br>your project</h2>
         </div>
 
-        <form id="contactForm" class="reveal reveal-d1 flex flex-col gap-5 mt-8" novalidate>
+        <!-- Setup Notice (shown only if access key is not set) -->
+        <div class="setup-notice reveal reveal-d1 mt-6" id="setupNotice">
+          <i class="fa-solid fa-circle-info" style="color: var(--accent); margin-right: 0.4rem;"></i>
+          <strong>Setup needed:</strong> To receive form submissions directly in your email, get a free access key from <a href="https://web3forms.com" target="_blank">web3forms.com</a> and replace <code style="background: var(--border); padding: 0.15rem 0.4rem; border-radius: 4px; font-size: 0.78rem;">YOUR_ACCESS_KEY_HERE</code> in the code.
+        </div>
+
+        <form id="contactForm" class="reveal reveal-d1 flex flex-col gap-5 mt-6" novalidate>
+          <input type="hidden" name="access_key" id="accessKey" value="YOUR_ACCESS_KEY_HERE">
+          <input type="hidden" name="subject" value="New Contact Form Submission — Nikshep Karki Portfolio">
+          <input type="hidden" name="from_name" value="Nikshep Karki Portfolio">
+          <!-- Honeypot spam protection -->
+          <input type="checkbox" name="botcheck" style="display:none">
+
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
             <div>
               <label for="nameInput" class="block text-sm mb-2" style="color: var(--muted);">Your Name <span style="color: var(--accent);">*</span></label>
-              <input type="text" id="nameInput" class="form-input" placeholder="Full name" required aria-required="true">
+              <input type="text" id="nameInput" name="name" class="form-input" placeholder="Full name" required aria-required="true">
               <p class="form-error text-sm mt-1" style="color: #e85050; display: none;"></p>
             </div>
             <div>
               <label for="emailInput" class="block text-sm mb-2" style="color: var(--muted);">Email Address <span style="color: var(--accent);">*</span></label>
-              <input type="email" id="emailInput" class="form-input" placeholder="you@example.com" required aria-required="true">
+              <input type="email" id="emailInput" name="email" class="form-input" placeholder="you@example.com" required aria-required="true">
               <p class="form-error text-sm mt-1" style="color: #e85050; display: none;"></p>
             </div>
           </div>
@@ -697,20 +710,20 @@
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
             <div>
               <label for="phoneInput" class="block text-sm mb-2" style="color: var(--muted);">Phone Number</label>
-              <input type="tel" id="phoneInput" class="form-input" placeholder="+977 XXXXXXXXXX">
+              <input type="tel" id="phoneInput" name="phone" class="form-input" placeholder="+977 XXXXXXXXXX">
             </div>
             <div>
               <label for="projectType" class="block text-sm mb-2" style="color: var(--muted);">Project Type <span style="color: var(--accent);">*</span></label>
-              <select id="projectType" class="form-input" style="cursor: pointer;" required>
+              <select id="projectType" name="project_type" class="form-input" style="cursor: pointer;" required>
                 <option value="" style="background: var(--card);">Select a category</option>
-                <option value="video" style="background: var(--card);">Video Production</option>
-                <option value="graphic" style="background: var(--card);">Graphic Design</option>
-                <option value="marketing" style="background: var(--card);">Digital Marketing</option>
-                <option value="branding" style="background: var(--card);">Brand Identity</option>
-                <option value="campaign" style="background: var(--card);">Political Campaign</option>
-                <option value="motion" style="background: var(--card);">Motion Graphics</option>
-                <option value="social" style="background: var(--card);">Social Media Management</option>
-                <option value="other" style="background: var(--card);">Other</option>
+                <option value="Video Production" style="background: var(--card);">Video Production</option>
+                <option value="Graphic Design" style="background: var(--card);">Graphic Design</option>
+                <option value="Digital Marketing" style="background: var(--card);">Digital Marketing</option>
+                <option value="Brand Identity" style="background: var(--card);">Brand Identity</option>
+                <option value="Political Campaign" style="background: var(--card);">Political Campaign</option>
+                <option value="Motion Graphics" style="background: var(--card);">Motion Graphics</option>
+                <option value="Social Media Management" style="background: var(--card);">Social Media Management</option>
+                <option value="Other" style="background: var(--card);">Other</option>
               </select>
               <p class="form-error text-sm mt-1" style="color: #e85050; display: none;"></p>
             </div>
@@ -718,24 +731,24 @@
 
           <div>
             <label for="budgetRange" class="block text-sm mb-2" style="color: var(--muted);">Budget Range</label>
-            <select id="budgetRange" class="form-input" style="cursor: pointer;">
+            <select id="budgetRange" name="budget_range" class="form-input" style="cursor: pointer;">
               <option value="" style="background: var(--card);">Select your budget</option>
-              <option value="small" style="background: var(--card);">Under NPR 10,000</option>
-              <option value="medium" style="background: var(--card);">NPR 10,000 — NPR 50,000</option>
-              <option value="large" style="background: var(--card);">NPR 50,000 — NPR 2,00,000</option>
-              <option value="enterprise" style="background: var(--card);">NPR 2,00,000+</option>
-              <option value="discuss" style="background: var(--card);">Let's discuss</option>
+              <option value="Under NPR 10,000" style="background: var(--card);">Under NPR 10,000</option>
+              <option value="NPR 10,000 — NPR 50,000" style="background: var(--card);">NPR 10,000 — NPR 50,000</option>
+              <option value="NPR 50,000 — NPR 2,00,000" style="background: var(--card);">NPR 50,000 — NPR 2,00,000</option>
+              <option value="NPR 2,00,000+" style="background: var(--card);">NPR 2,00,000+</option>
+              <option value="Let's discuss" style="background: var(--card);">Let's discuss</option>
             </select>
           </div>
 
           <div>
             <label for="messageInput" class="block text-sm mb-2" style="color: var(--muted);">Project Details <span style="color: var(--accent);">*</span></label>
-            <textarea id="messageInput" class="form-input" rows="6" placeholder="Tell me about your project, goals, timeline, and any specific requirements..." required aria-required="true" style="resize: vertical; min-height: 140px;"></textarea>
+            <textarea id="messageInput" name="message" class="form-input" rows="6" placeholder="Tell me about your project, goals, timeline, and any specific requirements..." required aria-required="true" style="resize: vertical; min-height: 140px;"></textarea>
             <p class="form-error text-sm mt-1" style="color: #e85050; display: none;"></p>
           </div>
 
           <div class="flex flex-col sm:flex-row gap-4 mt-2">
-            <button type="submit" class="btn-primary">
+            <button type="submit" class="btn-primary" id="submitBtn">
               Send Message <i class="fa-solid fa-paper-plane text-sm"></i>
             </button>
             <a href="mailto:info.nikshepkarki@gmail.com" class="btn-outline" style="display: inline-flex;">
@@ -745,22 +758,20 @@
         </form>
       </div>
 
-      <!-- Sidebar: Map + Socials + FAQ -->
+      <!-- Sidebar -->
       <div class="lg:col-span-2 flex flex-col gap-8">
 
-        <!-- Map Placeholder -->
+        <!-- Map -->
         <div class="reveal reveal-d1">
           <div class="map-placeholder">
             <div class="map-grid" aria-hidden="true"></div>
-            <div class="map-pin">
-              <i class="fa-solid fa-location-dot"></i>
-            </div>
+            <div class="map-pin"><i class="fa-solid fa-location-dot"></i></div>
             <p style="font-size: 0.9rem; font-weight: 500; color: var(--fg); position: relative; z-index: 1;">Lamjung & Kathmandu</p>
             <p style="font-size: 0.78rem; position: relative; z-index: 1;">Nepal</p>
           </div>
         </div>
 
-        <!-- Social Media Connect -->
+        <!-- Social Media Links -->
         <div class="reveal reveal-d2">
           <p style="font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.2em; color: var(--muted); margin-bottom: 1rem;">Connect with me</p>
           <div class="flex flex-col gap-3">
@@ -861,14 +872,20 @@
   </div>
 </footer>
 
-<!-- Toast Notification -->
+<!-- Toast -->
 <div class="toast" id="toast" role="alert" aria-live="polite">
   <i class="fa-solid fa-circle-check"></i>
   <span id="toastMessage">Message sent successfully!</span>
 </div>
 
 <script>
-// Theme Toggle
+// ===== Check if access key is set =====
+const ACCESS_KEY = document.getElementById('accessKey').value;
+if (ACCESS_KEY === 'YOUR_ACCESS_KEY_HERE') {
+  document.getElementById('setupNotice').classList.add('visible');
+}
+
+// ===== Theme Toggle =====
 function initTheme() {
   const savedTheme = localStorage.getItem('theme') || 'dark';
   document.documentElement.setAttribute('data-theme', savedTheme);
@@ -902,7 +919,7 @@ initTheme();
 document.getElementById('themeToggle').addEventListener('click', toggleTheme);
 document.getElementById('themeToggleMobile').addEventListener('click', toggleTheme);
 
-// Mobile Menu
+// ===== Mobile Menu =====
 const mobileMenuBtn = document.getElementById('mobileMenuBtn');
 const mobileMenu = document.getElementById('mobileMenu');
 let menuOpen = false;
@@ -923,37 +940,25 @@ function closeMobileMenu() {
   mobileMenuBtn.innerHTML = '<i class="fa-solid fa-bars"></i>';
 }
 
-// Nav scroll effect
+// ===== Nav Scroll =====
 const mainNav = document.getElementById('mainNav');
 window.addEventListener('scroll', () => {
-  if (window.scrollY > 50) {
-    mainNav.classList.add('scrolled');
-  } else {
-    mainNav.classList.remove('scrolled');
-  }
+  mainNav.classList.toggle('scrolled', window.scrollY > 50);
 });
 
-// Reveal on Scroll
+// ===== Reveal on Scroll =====
 const revealElements = document.querySelectorAll('.reveal');
 const revealObserver = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('visible');
-    }
+    if (entry.isIntersecting) entry.target.classList.add('visible');
   });
 }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
-
 revealElements.forEach(el => revealObserver.observe(el));
 
-// Cursor glow
+// ===== Cursor Glow =====
 const cursorGlow = document.getElementById('cursorGlow');
 let mouseX = 0, mouseY = 0, glowX = 0, glowY = 0;
-
-document.addEventListener('mousemove', (e) => {
-  mouseX = e.clientX;
-  mouseY = e.clientY;
-});
-
+document.addEventListener('mousemove', (e) => { mouseX = e.clientX; mouseY = e.clientY; });
 function animateGlow() {
   glowX += (mouseX - glowX) * 0.15;
   glowY += (mouseY - glowY) * 0.15;
@@ -963,14 +968,10 @@ function animateGlow() {
 }
 animateGlow();
 
-// Particle Canvas
+// ===== Particle Canvas =====
 const canvas = document.getElementById('particle-canvas');
 const ctx = canvas.getContext('2d');
-
-function resizeCanvas() {
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-}
+function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
 resizeCanvas();
 window.addEventListener('resize', resizeCanvas);
 
@@ -996,10 +997,8 @@ class Particle {
     ctx.fill();
   }
 }
-
 const particles = [];
 for (let i = 0; i < 50; i++) particles.push(new Particle());
-
 function animateParticles() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   particles.forEach(p => { p.update(); p.draw(); });
@@ -1007,20 +1006,16 @@ function animateParticles() {
 }
 animateParticles();
 
-// FAQ Toggle
+// ===== FAQ Toggle =====
 function toggleFaq(btn) {
   const item = btn.parentElement;
   const answer = item.querySelector('.faq-answer');
   const isOpen = item.classList.contains('open');
-
-  // Close all
   document.querySelectorAll('.faq-item').forEach(faq => {
     faq.classList.remove('open');
     faq.querySelector('.faq-answer').style.maxHeight = '0';
     faq.querySelector('.faq-question').setAttribute('aria-expanded', 'false');
   });
-
-  // Open clicked if was closed
   if (!isOpen) {
     item.classList.add('open');
     answer.style.maxHeight = answer.scrollHeight + 'px';
@@ -1028,17 +1023,15 @@ function toggleFaq(btn) {
   }
 }
 
-// Form validation and submission
+// ===== Form: Real Email via Web3Forms =====
 const contactForm = document.getElementById('contactForm');
+const submitBtn = document.getElementById('submitBtn');
 const toast = document.getElementById('toast');
 const toastMessage = document.getElementById('toastMessage');
 
 function showError(input, message) {
   const error = input.parentElement.querySelector('.form-error');
-  if (error) {
-    error.textContent = message;
-    error.style.display = 'block';
-  }
+  if (error) { error.textContent = message; error.style.display = 'block'; }
   input.style.borderColor = '#e85050';
 }
 
@@ -1053,16 +1046,16 @@ function showToast(message, isError) {
   const icon = toast.querySelector('i');
   if (isError) {
     icon.className = 'fa-solid fa-circle-exclamation';
-    toast.style.borderColor = '#e85050';
+    toast.classList.add('toast-error');
   } else {
     icon.className = 'fa-solid fa-circle-check';
-    toast.style.borderColor = 'var(--accent-dim)';
+    toast.classList.remove('toast-error');
   }
   toast.classList.add('show');
-  setTimeout(() => toast.classList.remove('show'), 4000);
+  setTimeout(() => toast.classList.remove('show'), 5000);
 }
 
-contactForm.addEventListener('submit', (e) => {
+contactForm.addEventListener('submit', async (e) => {
   e.preventDefault();
   let isValid = true;
 
@@ -1097,24 +1090,53 @@ contactForm.addEventListener('submit', (e) => {
     isValid = false;
   }
 
-  if (isValid) {
-    const submitBtn = contactForm.querySelector('button[type="submit"]');
-    submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Sending...';
-    submitBtn.disabled = true;
-
-    setTimeout(() => {
-      showToast("Message sent successfully! I'll get back to you soon.");
-      contactForm.reset();
-      submitBtn.innerHTML = 'Send Message <i class="fa-solid fa-paper-plane text-sm"></i>';
-      submitBtn.disabled = false;
-    }, 1500);
-  } else {
+  if (!isValid) {
     showToast('Please fix the errors in the form', true);
+    return;
+  }
+
+  // Check if access key is configured
+  const accessKey = document.getElementById('accessKey').value;
+  if (accessKey === 'YOUR_ACCESS_KEY_HERE') {
+    showToast('Form not configured yet. Please set up Web3Forms access key, or email directly.', true);
+    return;
+  }
+
+  // Disable button and show loading
+  submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Sending...';
+  submitBtn.disabled = true;
+
+  try {
+    const formData = new FormData(contactForm);
+
+    const response = await fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      body: formData
+    });
+
+    const result = await response.json();
+
+    if (result.success) {
+      showToast("Message sent successfully! I'll get back to you soon.", false);
+      contactForm.reset();
+      // Keep the hidden fields
+      document.getElementById('accessKey').value = accessKey;
+    } else {
+      showToast(result.message || 'Something went wrong. Please try again.', true);
+    }
+  } catch (error) {
+    console.error('Form submission error:', error);
+    showToast('Network error. Please check your connection and try again, or email directly.', true);
+  } finally {
+    submitBtn.innerHTML = 'Send Message <i class="fa-solid fa-paper-plane text-sm"></i>';
+    submitBtn.disabled = false;
   }
 });
 
+// Clear errors on input
 document.querySelectorAll('.form-input').forEach(input => {
   input.addEventListener('input', () => clearError(input));
+  input.addEventListener('change', () => clearError(input));
 });
 </script>
 </body>
