@@ -1,1615 +1,250 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Nikshep Karki — Video Producer, Graphic Designer, Digital Marketing Strategist</title>
-<script src="https://cdn.tailwindcss.com"></script>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,200;0,400;0,500;0,700;1,400&family=Playfair+Display:wght@400;700;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-<style>
-  :root {
-    --bg: #0c0a09;
-    --bg-warm: #110f0d;
-    --fg: #f5f0eb;
-    --muted: #7a7068;
-    --accent: #e85d3a;
-    --accent-dim: #c44a2b;
-    --accent-glow: rgba(232, 93, 58, 0.15);
-    --card: #161311;
-    --border: #2d2825;
-    --surface: #1c1916;
-    --nav-bg: rgba(12, 10, 9, 0.65);
-  }
-
-  [data-theme="light"] {
-    --bg: #f8f6f4;
-    --bg-warm: #f2efec;
-    --fg: #1a1714;
-    --muted: #6b6560;
-    --accent: #d04e2b;
-    --accent-dim: #b8431f;
-    --accent-glow: rgba(208, 78, 43, 0.12);
-    --card: #ffffff;
-    --border: #e5e0db;
-    --surface: #f0ece8;
-    --nav-bg: rgba(248, 246, 244, 0.85);
-  }
-
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-
-  html {
-    scroll-behavior: smooth;
-    scrollbar-width: thin;
-    scrollbar-color: var(--accent-dim) var(--bg);
-  }
-
-  body {
-    font-family: 'DM Sans', sans-serif;
-    background: var(--bg);
-    color: var(--fg);
-    overflow-x: hidden;
-    line-height: 1.65;
-    transition: background-color 0.3s ease, color 0.3s ease;
-  }
-
-  .font-display { font-family: 'Playfair Display', serif; }
-
-  ::-webkit-scrollbar { width: 5px; }
-  ::-webkit-scrollbar-track { background: var(--bg); }
-  ::-webkit-scrollbar-thumb { background: var(--accent-dim); border-radius: 3px; }
-
-  .grain-overlay {
-    position: fixed;
-    inset: 0;
-    z-index: 999;
-    pointer-events: none;
-    opacity: 0.035;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
-    background-repeat: repeat;
-    background-size: 200px 200px;
-  }
-
-  #particle-canvas {
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    z-index: 0;
-    pointer-events: none;
-  }
-
-  .cursor-glow {
-    position: fixed;
-    width: 350px; height: 350px;
-    border-radius: 50%;
-    background: radial-gradient(circle, var(--accent-glow), transparent 70%);
-    pointer-events: none;
-    z-index: 1;
-    transform: translate(-50%, -50%);
-    transition: opacity 0.4s ease;
-  }
-
-  nav {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    z-index: 100;
-    backdrop-filter: blur(24px);
-    -webkit-backdrop-filter: blur(24px);
-    background: var(--nav-bg);
-    border-bottom: 1px solid transparent;
-    transition: border-color 0.4s ease, box-shadow 0.4s ease, background 0.3s ease;
-  }
-
-  nav.scrolled {
-    border-bottom-color: var(--border);
-    box-shadow: 0 4px 40px rgba(0,0,0,0.4);
-  }
-
-  nav a {
-    color: var(--muted);
-    text-decoration: none;
-    font-size: 0.8rem;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    transition: color 0.3s ease;
-    position: relative;
-  }
-
-  nav a::after {
-    content: '';
-    position: absolute;
-    bottom: -4px; left: 0;
-    width: 0; height: 1px;
-    background: var(--accent);
-    transition: width 0.3s ease;
-  }
-
-  nav a:hover { color: var(--fg); }
-  nav a:hover::after { width: 100%; }
-  nav a.active { color: var(--accent); }
-  nav a.active::after { width: 100%; }
-
-  .theme-toggle {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    padding: 0.5rem 1rem;
-    background: transparent;
-    border: 1px solid var(--border);
-    border-radius: 100px;
-    cursor: pointer;
-    color: var(--muted);
-    font-size: 0.75rem;
-    font-family: 'DM Sans', sans-serif;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    transition: all 0.3s ease;
-  }
-
-  .theme-toggle:hover {
-    border-color: var(--accent-dim);
-    color: var(--fg);
-  }
-
-  .theme-toggle i {
-    color: var(--accent);
-    font-size: 0.85rem;
-  }
-
-  .hero-section {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    position: relative;
-    z-index: 2;
-    overflow: hidden;
-  }
-
-  .hero-name {
-    font-size: clamp(4rem, 12vw, 11rem);
-    font-weight: 900;
-    line-height: 0.92;
-    letter-spacing: -0.04em;
-  }
-
-  .hero-name .accent-letter {
-    color: var(--accent);
-    display: inline-block;
-    position: relative;
-  }
-
-  .hero-roles {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem 1.5rem;
-    margin-top: 1.5rem;
-  }
-
-  .hero-role-tag {
-    font-size: 0.78rem;
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-    color: var(--muted);
-    padding: 0.35rem 0;
-    border-bottom: 1px solid var(--border);
-    transition: border-color 0.3s ease, color 0.3s ease;
-  }
-
-  .hero-role-tag:hover {
-    border-color: var(--accent);
-    color: var(--fg);
-  }
-
-  .hero-greeting {
-    font-size: clamp(1rem, 2.2vw, 1.4rem);
-    font-weight: 200;
-    color: var(--muted);
-    max-width: 520px;
-    margin-top: 2rem;
-    font-style: italic;
-  }
-
-  .hero-location {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: 0.8rem;
-    color: var(--muted);
-    margin-top: 1.5rem;
-    padding: 0.5rem 1rem;
-    border: 1px solid var(--border);
-    border-radius: 100px;
-    transition: border-color 0.3s ease;
-  }
-
-  .hero-location:hover { border-color: var(--accent-dim); }
-  .hero-location i { color: var(--accent); font-size: 0.7rem; }
-
-  .filmstrip {
-    position: absolute;
-    right: -30px;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 60px;
-    height: 70vh;
-    border: 2px solid var(--border);
-    border-radius: 4px;
-    opacity: 0.15;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    padding: 8px 0;
-    pointer-events: none;
-  }
-
-  .filmstrip-hole {
-    width: 20px; height: 14px;
-    margin: 0 auto;
-    border: 1px solid var(--muted);
-    border-radius: 2px;
-  }
-
-  .reveal {
-    opacity: 0;
-    transform: translateY(35px);
-    transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
-                transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
-  }
-  .reveal.visible { opacity: 1; transform: translateY(0); }
-  .reveal-d1 { transition-delay: 0.1s; }
-  .reveal-d2 { transition-delay: 0.2s; }
-  .reveal-d3 { transition-delay: 0.3s; }
-  .reveal-d4 { transition-delay: 0.4s; }
-  .reveal-d5 { transition-delay: 0.5s; }
-
-  .section-label {
-    font-size: 0.7rem;
-    text-transform: uppercase;
-    letter-spacing: 0.25em;
-    color: var(--accent);
-    margin-bottom: 0.75rem;
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-  }
-
-  .section-label::before {
-    content: '';
-    width: 24px; height: 1px;
-    background: var(--accent);
-  }
-
-  .section-heading {
-    font-size: clamp(2rem, 5vw, 3.5rem);
-    font-weight: 900;
-    line-height: 1.08;
-    margin-bottom: 1.5rem;
-  }
-
-  .marquee-wrap {
-    overflow: hidden;
-    border-top: 1px solid var(--border);
-    border-bottom: 1px solid var(--border);
-    padding: 1rem 0;
-    position: relative;
-    z-index: 2;
-  }
-
-  .marquee-track {
-    display: flex;
-    gap: 2.5rem;
-    animation: marquee 30s linear infinite;
-    width: max-content;
-  }
-
-  @keyframes marquee {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-50%); }
-  }
-
-  .marquee-item {
-    font-size: clamp(1.2rem, 2.5vw, 2rem);
-    font-weight: 200;
-    white-space: nowrap;
-    color: var(--border);
-    transition: color 0.3s ease;
-    font-family: 'Playfair Display', serif;
-    font-style: italic;
-  }
-
-  .marquee-item:hover { color: var(--muted); }
-  .marquee-dot { color: var(--accent); font-size: 0.4rem; align-self: center; }
-
-  .about-image-wrap {
-    position: relative;
-    border-radius: 18px;
-    overflow: hidden;
-    background: var(--card);
-    border: 1px solid var(--border);
-  }
-
-  .about-image-wrap::before {
-    content: '';
-    position: absolute;
-    inset: -1px;
-    border-radius: 19px;
-    background: linear-gradient(160deg, var(--accent), transparent 40%, transparent 60%, var(--accent-dim));
-    z-index: 0;
-    opacity: 0.4;
-  }
-
-  .about-image-wrap::after {
-    content: '';
-    position: absolute;
-    bottom: 0; left: 0; right: 0;
-    height: 40%;
-    background: linear-gradient(to top, rgba(12,10,9,0.6), transparent);
-    pointer-events: none;
-    z-index: 2;
-  }
-
-  [data-theme="light"] .about-image-wrap::after {
-    background: linear-gradient(to top, rgba(248,246,244,0.6), transparent);
-  }
-
-  .about-image-wrap img {
-    width: 100%;
-    aspect-ratio: 3/4;
-    object-fit: cover;
-    object-position: center 15%;
-    display: block;
-    position: relative;
-    z-index: 1;
-    filter: contrast(1.08) saturate(0.95);
-    transition: transform 0.6s ease, filter 0.4s ease;
-  }
-
-  .about-image-wrap:hover img {
-    transform: scale(1.03);
-    filter: contrast(1.1) saturate(1);
-  }
-
-  .portrait-badge {
-    position: absolute;
-    bottom: 1.25rem;
-    left: 1.25rem;
-    z-index: 3;
-    display: flex;
-    align-items: center;
-    gap: 0.6rem;
-    padding: 0.6rem 1rem;
-    background: rgba(12, 10, 9, 0.8);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid var(--border);
-    border-radius: 100px;
-    font-size: 0.75rem;
-    color: var(--fg);
-    font-weight: 500;
-  }
-
-  [data-theme="light"] .portrait-badge {
-    background: rgba(255, 255, 255, 0.9);
-  }
-
-  .portrait-badge .dot {
-    width: 8px; height: 8px;
-    border-radius: 50%;
-    background: #4ade80;
-    animation: pulse-dot 2s ease-in-out infinite;
-  }
-
-  @keyframes pulse-dot {
-    0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.4); }
-    50% { opacity: 0.7; box-shadow: 0 0 0 6px rgba(74, 222, 128, 0); }
-  }
-
-  .timeline { position: relative; padding-left: 2rem; }
-
-  .timeline::before {
-    content: '';
-    position: absolute;
-    left: 0; top: 8px; bottom: 8px;
-    width: 1px;
-    background: var(--border);
-  }
-
-  .timeline-item {
-    position: relative;
-    padding-bottom: 2.5rem;
-  }
-
-  .timeline-item:last-child { padding-bottom: 0; }
-
-  .timeline-dot {
-    position: absolute;
-    left: -2rem;
-    top: 6px;
-    width: 9px; height: 9px;
-    border-radius: 50%;
-    background: var(--bg);
-    border: 2px solid var(--border);
-    transform: translateX(-4px);
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
-    z-index: 2;
-  }
-
-  .timeline-item:hover .timeline-dot {
-    border-color: var(--accent);
-    box-shadow: 0 0 12px var(--accent-glow);
-  }
-
-  .timeline-role {
-    font-size: 0.7rem;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--accent);
-    margin-bottom: 0.25rem;
-  }
-
-  .timeline-title {
-    font-size: 1.25rem;
-    font-weight: 700;
-    margin-bottom: 0.25rem;
-  }
-
-  .timeline-org {
-    font-size: 0.85rem;
-    color: var(--muted);
-    margin-bottom: 0.75rem;
-  }
-
-  .timeline-list {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 0.35rem;
-  }
-
-  .timeline-list li {
-    font-size: 0.88rem;
-    color: var(--muted);
-    padding-left: 1rem;
-    position: relative;
-    line-height: 1.5;
-  }
-
-  .timeline-list li::before {
-    content: '';
-    position: absolute;
-    left: 0; top: 0.55em;
-    width: 4px; height: 4px;
-    border-radius: 50%;
-    background: var(--border);
-  }
-
-  .skill-bar-track {
-    width: 100%;
-    height: 3px;
-    background: var(--border);
-    border-radius: 2px;
-    overflow: hidden;
-  }
-
-  .skill-bar-fill {
-    height: 100%;
-    background: linear-gradient(90deg, var(--accent), var(--accent-dim));
-    border-radius: 2px;
-    width: 0%;
-    transition: width 1.4s cubic-bezier(0.16, 1, 0.3, 1);
-  }
-
-  .expertise-pill {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.4rem;
-    padding: 0.55rem 1.1rem;
-    border: 1px solid var(--border);
-    border-radius: 100px;
-    font-size: 0.82rem;
-    color: var(--muted);
-    transition: all 0.35s ease;
-    cursor: default;
-  }
-
-  .expertise-pill:hover {
-    border-color: var(--accent-dim);
-    color: var(--fg);
-    background: var(--accent-glow);
-    transform: translateY(-2px);
-  }
-
-  .expertise-pill i { color: var(--accent); font-size: 0.75rem; }
-
-  .tool-card {
-    padding: 1.5rem;
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    text-align: center;
-    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-  }
-
-  .tool-card:hover {
-    transform: translateY(-6px);
-    border-color: var(--accent-dim);
-    box-shadow: 0 12px 40px rgba(0,0,0,0.4), 0 0 30px var(--accent-glow);
-  }
-
-  [data-theme="light"] .tool-card:hover {
-    box-shadow: 0 12px 40px rgba(0,0,0,0.08), 0 0 30px var(--accent-glow);
-  }
-
-  .tool-icon {
-    font-size: 2rem;
-    margin-bottom: 0.75rem;
-    display: block;
-    color: var(--accent);
-    transition: transform 0.3s ease;
-  }
-
-  .tool-card:hover .tool-icon { transform: scale(1.15); }
-
-  .tool-name { font-weight: 700; font-size: 0.9rem; margin-bottom: 0.25rem; }
-  .tool-type { font-size: 0.75rem; color: var(--muted); }
-
-  .philosophy-quote {
-    position: relative;
-    padding: 2.5rem;
-    border-left: 2px solid var(--accent);
-    background: linear-gradient(135deg, var(--accent-glow), transparent 60%);
-    border-radius: 0 16px 16px 0;
-  }
-
-  .philosophy-quote::before {
-    content: '\201C';
-    position: absolute;
-    top: -10px; left: 20px;
-    font-size: 5rem;
-    font-family: 'Playfair Display', serif;
-    color: var(--accent);
-    opacity: 0.2;
-    line-height: 1;
-  }
-
-  .form-input {
-    width: 100%;
-    padding: 0.9rem 1.15rem;
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    color: var(--fg);
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.92rem;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
-    outline: none;
-  }
-
-  .form-input:focus {
-    border-color: var(--accent);
-    box-shadow: 0 0 0 3px var(--accent-glow);
-  }
-
-  .form-input::placeholder { color: var(--muted); }
-
-  select.form-input {
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%237a7068' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10l-5 5z'/%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: right 1rem center;
-    padding-right: 2.5rem;
-  }
-
-  .btn-primary {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.85rem 2rem;
-    background: var(--accent);
-    color: #fff;
-    border: none;
-    border-radius: 10px;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.88rem;
-    font-weight: 700;
-    letter-spacing: 0.03em;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .btn-primary::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(135deg, rgba(255,255,255,0.15), transparent);
-    opacity: 0;
-    transition: opacity 0.3s ease;
-  }
-
-  .btn-primary:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 30px rgba(232, 93, 58, 0.35);
-  }
-
-  .btn-primary:hover::before { opacity: 1; }
-  .btn-primary:active { transform: translateY(0); }
-
-  .btn-outline {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.85rem 2rem;
-    background: transparent;
-    color: var(--fg);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.88rem;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    text-decoration: none;
-  }
-
-  .btn-outline:hover {
-    border-color: var(--accent);
-    color: var(--accent);
-    transform: translateY(-2px);
-  }
-
-  .toast {
-    position: fixed;
-    bottom: 2rem; right: 2rem;
-    background: var(--card);
-    border: 1px solid var(--accent-dim);
-    color: var(--fg);
-    padding: 1rem 1.5rem;
-    border-radius: 12px;
-    font-size: 0.88rem;
-    z-index: 200;
-    transform: translateY(120%);
-    opacity: 0;
-    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-    box-shadow: 0 10px 40px rgba(0,0,0,0.6);
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-  }
-
-  [data-theme="light"] .toast {
-    box-shadow: 0 10px 40px rgba(0,0,0,0.1);
-  }
-
-  .toast.show { transform: translateY(0); opacity: 1; }
-  .toast i { color: var(--accent); }
-
-  @keyframes scrollPulse {
-    0% { transform: translateY(-100%); }
-    100% { transform: translateY(200%); }
-  }
-
-  .orb {
-    position: absolute;
-    border-radius: 50%;
-    filter: blur(90px);
-    pointer-events: none;
-    animation: orbFloat 10s ease-in-out infinite;
-  }
-
-  @keyframes orbFloat {
-    0%, 100% { transform: translate(0, 0) scale(1); }
-    33% { transform: translate(25px, -18px) scale(1.08); }
-    66% { transform: translate(-18px, 12px) scale(0.92); }
-  }
-
-  .footer-link {
-    color: var(--muted);
-    text-decoration: none;
-    font-size: 0.82rem;
-    transition: color 0.3s ease;
-  }
-  .footer-link:hover { color: var(--accent); }
-
-  .project-card {
-    position: relative;
-    overflow: hidden;
-    border-radius: 14px;
-    background: var(--card);
-    border: 1px solid var(--border);
-    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-    cursor: pointer;
-  }
-
-  .project-card:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 16px 50px rgba(0,0,0,0.5), 0 0 30px var(--accent-glow);
-    border-color: var(--accent-dim);
-  }
-
-  [data-theme="light"] .project-card:hover {
-    box-shadow: 0 16px 50px rgba(0,0,0,0.1), 0 0 30px var(--accent-glow);
-  }
-
-  .project-card img {
-    width: 100%;
-    aspect-ratio: 16/10;
-    object-fit: cover;
-    display: block;
-    filter: brightness(0.65) saturate(0.85);
-    transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-  }
-
-  .project-card:hover img {
-    transform: scale(1.06);
-    filter: brightness(0.8) saturate(1);
-  }
-
-  .project-overlay {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(to top, rgba(12,10,9,0.95) 0%, rgba(12,10,9,0.3) 50%, transparent 100%);
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    padding: 1.75rem;
-  }
-
-  [data-theme="light"] .project-overlay {
-    background: linear-gradient(to top, rgba(248,246,244,0.95) 0%, rgba(248,246,244,0.3) 50%, transparent 100%);
-  }
-
-  .project-tag {
-    display: inline-block;
-    padding: 0.18rem 0.6rem;
-    border: 1px solid var(--accent-dim);
-    border-radius: 100px;
-    font-size: 0.65rem;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: var(--accent);
-    margin-bottom: 0.6rem;
-    width: fit-content;
-  }
-
-  .project-title {
-    font-size: 1.35rem;
-    font-weight: 700;
-    margin-bottom: 0.4rem;
-    transition: color 0.3s ease;
-  }
-
-  .project-card:hover .project-title { color: var(--accent); }
-
-  .project-desc {
-    font-size: 0.82rem;
-    color: var(--muted);
-    line-height: 1.55;
-  }
-
-  .project-arrow {
-    position: absolute;
-    top: 1.25rem; right: 1.25rem;
-    width: 36px; height: 36px;
-    border-radius: 50%;
-    background: rgba(232, 93, 58, 0.1);
-    border: 1px solid rgba(232, 93, 58, 0.3);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--accent);
-    font-size: 0.8rem;
-    transform: translate(6px, -6px);
-    opacity: 0;
-    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-  }
-
-  .project-card:hover .project-arrow {
-    transform: translate(0, 0);
-    opacity: 1;
-  }
-
-  .featured-card img {
-    aspect-ratio: 16/9;
-    object-position: center 30%;
-  }
-
-  .featured-card .project-overlay {
-    padding: 2rem 2.25rem;
-  }
-
-  .featured-card .project-title {
-    font-size: 1.6rem;
-  }
-
-  .featured-card .project-desc {
-    font-size: 0.9rem;
-    max-width: 600px;
-  }
-
-  .featured-card .project-meta {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1.5rem;
-    margin-top: 1rem;
-    padding-top: 1rem;
-    border-top: 1px solid rgba(255,255,255,0.08);
-  }
-
-  [data-theme="light"] .featured-card .project-meta {
-    border-top-color: var(--border);
-  }
-
-  .featured-card .meta-item {
-    display: flex;
-    flex-direction: column;
-    gap: 0.15rem;
-  }
-
-  .featured-card .meta-label {
-    font-size: 0.65rem;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--accent);
-  }
-
-  .featured-card .meta-value {
-    font-size: 0.82rem;
-    color: var(--fg);
-    font-weight: 500;
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    *, *::before, *::after {
-      animation-duration: 0.01ms !important;
-      transition-duration: 0.01ms !important;
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Nikshep Karki — Visual storyteller, video producer and digital strategist based in Nepal.">
+  <title>Nikshep Karki — Visual Storyteller</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,600;1,700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #11120f;
+      --paper: #f4f1ea;
+      --cream: #e9e3d8;
+      --muted: #706f68;
+      --line: rgba(17, 18, 15, .15);
+      --orange: #f25730;
+      --lime: #cdea38;
+      --white: #fffefb;
+      --shadow: 0 24px 70px rgba(29, 25, 18, .16);
     }
-    .marquee-track { animation: none; }
-    .orb { animation: none; }
-  }
 
-  @media (max-width: 768px) {
-    .filmstrip { display: none; }
-    .hero-name { line-height: 0.95; }
-    .philosophy-quote { padding: 1.5rem; }
-    .philosophy-quote::before { font-size: 3rem; }
-    .portrait-badge { bottom: 0.75rem; left: 0.75rem; padding: 0.4rem 0.8rem; font-size: 0.7rem; }
-    .featured-card .project-overlay { padding: 1.25rem; }
-    .featured-card .project-title { font-size: 1.3rem; }
-    .featured-card .project-desc { font-size: 0.82rem; }
-    .featured-card .project-meta { gap: 1rem; }
-    .theme-toggle span { display: none; }
-  }
-</style>
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--paper);
+      font-family: Manrope, Arial, sans-serif;
+      overflow-x: hidden;
+    }
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; }
+
+    .wrap { width: min(1240px, calc(100% - 48px)); margin: auto; }
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: 9px;
+      font: 500 10px/1 'DM Mono', monospace; letter-spacing: .13em; text-transform: uppercase;
+    }
+    .eyebrow::before { content: ''; width: 8px; height: 8px; border-radius: 50%; background: var(--orange); }
+
+    /* Navigation */
+    .nav {
+      position: absolute; z-index: 10; inset: 0 0 auto;
+      height: 92px; display: flex; align-items: center;
+    }
+    .nav-row { display: flex; align-items: center; justify-content: space-between; width: 100%; }
+    .brand { font-weight: 800; font-size: 19px; letter-spacing: -.07em; }
+    .brand span { color: var(--orange); }
+    .nav-links { display: flex; align-items: center; gap: 28px; }
+    .nav-links a { font: 500 11px/1 'DM Mono', monospace; letter-spacing: .06em; text-transform: uppercase; }
+    .nav-links a:not(.nav-cta) { position: relative; }
+    .nav-links a:not(.nav-cta)::after {
+      content: ''; position: absolute; left: 0; right: 0; bottom: -7px; height: 1px; background: var(--ink);
+      transform: scaleX(0); transform-origin: left; transition: transform .25s ease;
+    }
+    .nav-links a:hover::after { transform: scaleX(1); }
+    .nav-cta { border: 1px solid var(--ink); padding: 12px 15px; transition: background .25s, color .25s; }
+    .nav-cta:hover { color: var(--white); background: var(--ink); }
+    .menu-toggle { display: none; border: 0; background: none; width: 36px; height: 30px; cursor: pointer; }
+    .menu-toggle span { display: block; height: 2px; width: 25px; margin: 5px auto; background: var(--ink); }
+
+    /* Hero */
+    .hero { min-height: 850px; height: 100vh; max-height: 1050px; position: relative; overflow: hidden; }
+    .hero::before {
+      content: ''; position: absolute; z-index: -2; inset: 0;
+      background: radial-gradient(circle at 75% 28%, rgba(205,234,56,.55) 0, rgba(205,234,56,0) 25%),
+        linear-gradient(115deg, #f7f5ef 0%, #efe9dd 55%, #e0d9ca 100%);
+    }
+    .hero::after {
+      content: ''; position: absolute; inset: 0; z-index: -1; opacity: .4; pointer-events: none;
+      background-image: linear-gradient(rgba(17,18,15,.05) 1px, transparent 1px), linear-gradient(90deg, rgba(17,18,15,.05) 1px, transparent 1px);
+      background-size: 58px 58px; mask-image: linear-gradient(to bottom, black 0%, transparent 84%);
+    }
+    .hero-inner { padding-top: 150px; height: 100%; position: relative; }
+    .hero-copy { position: relative; z-index: 2; width: min(720px, 64%); }
+    .hero-title { margin: 25px 0 24px; font-size: clamp(60px, 9.7vw, 144px); letter-spacing: -.09em; line-height: .8; font-weight: 800; }
+    .hero-title .serif { font-family: 'Playfair Display', Georgia, serif; font-weight: 600; font-style: italic; letter-spacing: -.075em; }
+    .hero-title .stroke { color: transparent; -webkit-text-stroke: 1.4px var(--ink); }
+    .hero-summary { width: min(450px, 100%); margin: 0; font-size: 16px; line-height: 1.72; color: #494943; }
+    .hero-actions { display: flex; gap: 12px; margin-top: 36px; align-items: center; }
+    .button {
+      display: inline-flex; justify-content: center; align-items: center; gap: 14px; min-height: 51px; padding: 0 21px;
+      font: 500 11px/1 'DM Mono', monospace; letter-spacing: .08em; text-transform: uppercase; transition: transform .25s ease, background .25s ease;
+    }
+    .button:hover { transform: translateY(-3px); }
+    .button-dark { color: var(--white); background: var(--ink); }
+    .button-dark .arrow { color: var(--lime); }
+    .button-text { border-bottom: 1px solid var(--ink); padding: 0 0 6px; min-height: 0; }
+
+    .hero-portrait {
+      position: absolute; right: 0; bottom: 0; z-index: 1; width: min(43vw, 520px); height: min(77vh, 760px);
+      background: #d7c9b2; overflow: hidden; clip-path: polygon(14% 0, 100% 0, 100% 91%, 85% 100%, 0 100%, 0 9%);
+    }
+    .hero-portrait::before { content: ''; position: absolute; inset: 0; background: linear-gradient(145deg, rgba(242,87,48,.25), transparent 40%), linear-gradient(0deg, rgba(17,18,15,.37), transparent 35%); z-index: 1; }
+    .hero-portrait img { width: 100%; height: 100%; object-fit: cover; object-position: 52% center; filter: grayscale(100%) contrast(1.08); mix-blend-mode: multiply; }
+    .portrait-label { position: absolute; z-index: 2; left: 28px; bottom: 24px; color: var(--white); font: 500 10px/1.55 'DM Mono', monospace; letter-spacing: .1em; text-transform: uppercase; }
+    .portrait-label strong { display: block; margin-top: 6px; font-family: Manrope, sans-serif; font-size: 14px; letter-spacing: 0; text-transform: none; }
+    .ring { position: absolute; z-index: 0; right: 26%; top: 125px; width: 360px; height: 360px; border: 1px solid rgba(17,18,15,.23); border-radius: 50%; }
+    .ring::after { content: ''; position: absolute; inset: 26px; border: 1px solid rgba(17,18,15,.18); border-radius: 50%; }
+    .scribble { position: absolute; right: 39%; top: 174px; color: var(--orange); font: 700 29px/1 'Playfair Display', serif; font-style: italic; transform: rotate(-9deg); }
+    .hero-index { position: absolute; bottom: 35px; left: 0; display: flex; align-items: center; gap: 13px; font: 500 10px/1 'DM Mono', monospace; letter-spacing: .1em; text-transform: uppercase; }
+    .hero-index b { font-size: 28px; letter-spacing: -.08em; }
+    .hero-scroll { position: absolute; right: 0; bottom: 39px; display: flex; align-items: center; gap: 10px; font: 500 10px/1 'DM Mono', monospace; letter-spacing: .1em; text-transform: uppercase; writing-mode: vertical-rl; }
+    .hero-scroll::before { content: ''; display: block; width: 1px; height: 48px; background: var(--ink); }
+
+    /* Small proof-of-work band */
+    .proof { background: var(--ink); color: var(--white); position: relative; overflow: hidden; }
+    .proof-row { min-height: 168px; display: grid; grid-template-columns: 1.2fr 1fr 1fr 1fr; align-items: stretch; }
+    .proof-lead { display: flex; align-items: center; padding-right: 30px; font: 600 clamp(22px, 2vw, 30px)/1.12 'Playfair Display', Georgia, serif; }
+    .proof-item { display: flex; flex-direction: column; justify-content: center; padding: 27px 22px; border-left: 1px solid rgba(255,255,255,.2); }
+    .proof-number { color: var(--lime); font-size: 33px; line-height: 1; letter-spacing: -.07em; font-weight: 800; }
+    .proof-label { margin-top: 7px; color: rgba(255,255,255,.64); font: 400 10px/1.5 'DM Mono', monospace; letter-spacing: .08em; text-transform: uppercase; }
+
+    /* Intro section */
+    .intro { padding: 145px 0; }
+    .intro-grid { display: grid; grid-template-columns: .8fr 2fr; gap: 56px; }
+    .section-no { font: 500 10px/1 'DM Mono', monospace; color: var(--orange); letter-spacing: .14em; }
+    .intro-heading { max-width: 780px; margin: 17px 0 35px; font-size: clamp(37px, 5vw, 70px); letter-spacing: -.065em; line-height: 1.02; }
+    .intro-heading em { font-family: 'Playfair Display', Georgia, serif; font-weight: 600; }
+    .intro-text { max-width: 580px; color: var(--muted); font-size: 16px; line-height: 1.85; }
+    .service-list { margin-top: 52px; display: grid; grid-template-columns: 1fr 1fr; border-top: 1px solid var(--line); }
+    .service { padding: 20px 0; display: flex; justify-content: space-between; border-bottom: 1px solid var(--line); font-size: 14px; font-weight: 600; }
+    .service:nth-child(odd) { padding-right: 30px; border-right: 1px solid var(--line); }
+    .service:nth-child(even) { padding-left: 30px; }
+    .service span { color: var(--orange); font-family: 'DM Mono', monospace; }
+
+    .footer { background: #e8e2d7; padding: 27px 0; font: 500 10px/1.5 'DM Mono', monospace; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+    .footer-row { display: flex; justify-content: space-between; gap: 18px; }
+
+    @media (max-width: 760px) {
+      .wrap { width: min(100% - 36px, 560px); }
+      .nav { height: 76px; }
+      .nav-links { display: none; }
+      .menu-toggle { display: block; }
+      .mobile-menu { position: fixed; inset: 76px 0 auto; padding: 20px 24px 30px; background: var(--paper); display: none; border-bottom: 1px solid var(--line); }
+      .mobile-menu.is-open { display: grid; gap: 19px; }
+      .mobile-menu a { font: 500 12px/1 'DM Mono', monospace; letter-spacing: .06em; text-transform: uppercase; }
+      .hero { min-height: 790px; height: 100svh; }
+      .hero-inner { padding-top: 130px; }
+      .hero-copy { width: 100%; }
+      .hero-title { font-size: clamp(60px, 18.5vw, 103px); line-height: .84; margin-top: 22px; }
+      .hero-summary { font-size: 14px; max-width: 292px; }
+      .hero-portrait { width: 48vw; height: 47vh; min-height: 355px; right: -18px; opacity: .78; }
+      .ring { width: 185px; height: 185px; top: 275px; right: 5%; }
+      .scribble { right: 27%; top: 320px; font-size: 22px; }
+      .hero-index { bottom: 24px; }
+      .hero-scroll { display: none; }
+      .proof-row { grid-template-columns: 1fr 1fr; }
+      .proof-lead { grid-column: 1 / -1; min-height: 95px; padding: 25px 0; }
+      .proof-item { padding: 21px 14px; }
+      .proof-item:nth-child(2) { border-left: 0; }
+      .proof-number { font-size: 28px; }
+      .intro { padding: 88px 0; }
+      .intro-grid { grid-template-columns: 1fr; gap: 23px; }
+      .intro-heading { margin-top: 13px; font-size: 38px; }
+      .intro-text { font-size: 15px; }
+      .service-list { grid-template-columns: 1fr; }
+      .service:nth-child(odd), .service:nth-child(even) { padding: 17px 0; border-right: 0; }
+      .footer-row { flex-direction: column; }
+    }
+  </style>
 </head>
 <body>
+  <header class="nav">
+    <div class="wrap nav-row">
+      <a class="brand" href="#home" aria-label="Nikshep Karki home">NK<span>.</span></a>
+      <nav class="nav-links" aria-label="Main navigation">
+        <a href="#about">About</a>
+        <a href="#work">Selected work</a>
+        <a href="#contact" class="nav-cta">Start a project ↗</a>
+      </nav>
+      <button class="menu-toggle" id="menuButton" aria-label="Open menu" aria-expanded="false"><span></span><span></span></button>
+    </div>
+  </header>
+  <nav class="mobile-menu" id="mobileMenu" aria-label="Mobile navigation">
+    <a href="#about">About</a>
+    <a href="#work">Selected work</a>
+    <a href="#contact">Start a project ↗</a>
+  </nav>
 
-<div class="grain-overlay" aria-hidden="true"></div>
-<div class="cursor-glow" id="cursorGlow" aria-hidden="true"></div>
-<canvas id="particle-canvas" aria-hidden="true"></canvas>
-
-<!-- Navigation -->
-<nav id="mainNav" role="navigation" aria-label="Main navigation">
-  <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-    <a href="#hero" style="color: var(--fg); text-decoration: none; font-weight: 700; font-size: 1rem; letter-spacing: -0.01em;">
-      NK<span style="color: var(--accent);">.</span>
-    </a>
-    <div class="hidden md:flex items-center gap-8">
-      <a href="#about" class="nav-link">About</a>
-      <a href="#experience" class="nav-link">Experience</a>
-      <a href="#skills" class="nav-link">Skills</a>
-      <a href="#tools" class="nav-link">Tools</a>
-      <a href="https://www.nikshepkarki.com.np/contact.html" class="nav-link">Contact</a>
-      <button id="themeToggle" class="theme-toggle" aria-label="Toggle theme">
-        <i class="fa-solid fa-moon" id="themeIcon"></i>
-        <span id="themeText">Dark Theme</span>
-      </button>
-    </div>
-    <div class="flex items-center gap-4 md:hidden">
-      <button id="themeToggleMobile" class="theme-toggle" aria-label="Toggle theme">
-        <i class="fa-solid fa-moon" id="themeIconMobile"></i>
-      </button>
-      <button id="mobileMenuBtn" class="text-lg" style="color: var(--muted); background: none; border: none; cursor: pointer;" aria-label="Toggle menu">
-        <i class="fa-solid fa-bars"></i>
-      </button>
-    </div>
-  </div>
-  <div id="mobileMenu" class="md:hidden overflow-hidden" style="max-height: 0; transition: max-height 0.4s ease;">
-    <div class="px-6 pb-4 flex flex-col gap-4">
-      <a href="#about" class="nav-link" onclick="closeMobileMenu()">About</a>
-      <a href="#experience" class="nav-link" onclick="closeMobileMenu()">Experience</a>
-      <a href="#skills" class="nav-link" onclick="closeMobileMenu()">Skills</a>
-      <a href="#tools" class="nav-link" onclick="closeMobileMenu()">Tools</a>
-      <a href="https://www.nikshepkarki.com.np/contact.html" class="nav-link" onclick="closeMobileMenu()">Contact</a>
-    </div>
-  </div>
-</nav>
-
-<!-- Hero Section -->
-<section id="hero" class="hero-section">
-  <div class="orb" style="width: 450px; height: 450px; background: rgba(232,93,58,0.07); top: 8%; right: 5%;" aria-hidden="true"></div>
-  <div class="orb" style="width: 300px; height: 300px; background: rgba(196,74,43,0.05); bottom: 10%; left: -2%; animation-delay: -4s;" aria-hidden="true"></div>
-
-  <div class="filmstrip hidden lg:flex" aria-hidden="true">
-    <div class="filmstrip-hole"></div><div class="filmstrip-hole"></div><div class="filmstrip-hole"></div>
-    <div class="filmstrip-hole"></div><div class="filmstrip-hole"></div><div class="filmstrip-hole"></div>
-    <div class="filmstrip-hole"></div><div class="filmstrip-hole"></div><div class="filmstrip-hole"></div>
-    <div class="filmstrip-hole"></div><div class="filmstrip-hole"></div><div class="filmstrip-hole"></div>
-    <div class="filmstrip-hole"></div><div class="filmstrip-hole"></div>
-  </div>
-
-  <div class="max-w-7xl mx-auto px-6 relative z-10 pt-24 w-full">
-    <div class="reveal">
-      <p style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.25em; color: var(--accent); margin-bottom: 1rem;">Portfolio</p>
-    </div>
-    <h1 class="hero-name font-display reveal reveal-d1">
-      <span class="accent-letter">N</span>ikshep<br>Karki
-    </h1>
-    <div class="hero-roles reveal reveal-d2">
-      <span class="hero-role-tag">Video Producer</span>
-      <span class="hero-role-tag">Graphic Designer</span>
-      <span class="hero-role-tag">Digital Marketing Strategist</span>
-    </div>
-    <p class="hero-greeting reveal reveal-d3">
-      "Hello Everyone." — Turning ideas into compelling visual stories that inform, engage, and inspire.
-    </p>
-    <div class="reveal reveal-d4 mt-6">
-      <span class="hero-location">
-        <i class="fa-solid fa-location-dot"></i>
-        Lamjung & Kathmandu, Nepal
-      </span>
-    </div>
-    <div class="flex flex-wrap gap-4 mt-10 reveal reveal-d5">
-      <a href="https://www.nikshepkarki.com.np/contact.html" class="btn-primary">Contact Me <i class="fa-solid fa-arrow-right text-sm"></i></a>
-      <a href="#about" class="btn-outline">Learn More</a>
-    </div>
-    <div class="reveal reveal-d5 mt-16 flex items-center gap-3" style="color: var(--muted); font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase;">
-      <div style="width: 1px; height: 36px; background: var(--border); position: relative; overflow: hidden;">
-        <div style="width: 100%; height: 50%; background: var(--accent); animation: scrollPulse 2s ease-in-out infinite;"></div>
-      </div>
-      Scroll to explore
-    </div>
-  </div>
-</section>
-
-<!-- Marquee -->
-<div class="marquee-wrap" aria-hidden="true">
-  <div class="marquee-track">
-    <span class="marquee-item">Video Production</span><span class="marquee-dot"><i class="fa-solid fa-diamond"></i></span>
-    <span class="marquee-item">Graphic Design</span><span class="marquee-dot"><i class="fa-solid fa-diamond"></i></span>
-    <span class="marquee-item">Brand Identity</span><span class="marquee-dot"><i class="fa-solid fa-diamond"></i></span>
-    <span class="marquee-item">Social Media Marketing</span><span class="marquee-dot"><i class="fa-solid fa-diamond"></i></span>
-    <span class="marquee-item">Digital Campaigns</span><span class="marquee-dot"><i class="fa-solid fa-diamond"></i></span>
-    <span class="marquee-item">Motion Graphics</span><span class="marquee-dot"><i class="fa-solid fa-diamond"></i></span>
-    <span class="marquee-item">Visual Storytelling</span><span class="marquee-dot"><i class="fa-solid fa-diamond"></i></span>
-    <span class="marquee-item">Video Production</span><span class="marquee-dot"><i class="fa-solid fa-diamond"></i></span>
-    <span class="marquee-item">Graphic Design</span><span class="marquee-dot"><i class="fa-solid fa-diamond"></i></span>
-    <span class="marquee-item">Brand Identity</span><span class="marquee-dot"><i class="fa-solid fa-diamond"></i></span>
-    <span class="marquee-item">Social Media Marketing</span><span class="marquee-dot"><i class="fa-solid fa-diamond"></i></span>
-    <span class="marquee-item">Digital Campaigns</span><span class="marquee-dot"><i class="fa-solid fa-diamond"></i></span>
-    <span class="marquee-item">Motion Graphics</span><span class="marquee-dot"><i class="fa-solid fa-diamond"></i></span>
-    <span class="marquee-item">Visual Storytelling</span><span class="marquee-dot"><i class="fa-solid fa-diamond"></i></span>
-  </div>
-</div>
-
-<!-- About Section -->
-<section id="about" class="relative z-10 py-28 md:py-36">
-  <div class="max-w-7xl mx-auto px-6">
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-      <div class="about-image-wrap reveal">
-        <img
-          src="https://z-cdn-media.chatglm.cn/files/0dab2550-ee03-4e9d-8d06-038757e2910f.png?auth_key=1882924169-bc1972714228465ba9cc07b84e11e35e-0-e1aa92dc7c1fe4d4469b987151134556"
-          alt="Nikshep Karki — Video Producer, Graphic Designer, Digital Marketing Strategist"
-          loading="eager"
-        >
-        <div class="portrait-badge">
-          <span class="dot"></span>
-          Available for projects
-        </div>
-      </div>
-      <div>
-        <div class="reveal">
-          <p class="section-label">About Me</p>
-          <h2 class="section-heading font-display">Visual storyteller<br>with purpose</h2>
-        </div>
-        <p class="reveal reveal-d1" style="color: var(--muted); font-size: 0.95rem; margin-bottom: 1rem;">
-          I am a multidisciplinary creative professional specializing in video production, graphic design, digital branding, and strategic marketing. My work combines visual storytelling with marketing insight to create compelling content that informs, engages, and inspires audiences.
-        </p>
-        <p class="reveal reveal-d2" style="color: var(--muted); font-size: 0.95rem; margin-bottom: 1rem;">
-          With professional experience across digital journalism, political communications, entertainment marketing, and organizational branding, I have successfully developed creative solutions for media organizations, public figures, film promotions, and social campaigns.
-        </p>
-        <p class="reveal reveal-d3" style="color: var(--muted); font-size: 0.95rem; margin-bottom: 2rem;">
-          My approach is built on strong visual communication, attention to detail, and a deep understanding of audience behavior. Whether producing cinematic videos, designing impactful graphics, or leading digital campaigns, I focus on delivering work that is both visually compelling and strategically effective.
-        </p>
-        <div class="grid grid-cols-2 gap-4 reveal reveal-d4">
-          <div style="padding: 1.25rem; background: var(--card); border: 1px solid var(--border); border-radius: 12px;">
-            <div style="font-size: 2rem; font-weight: 900; color: var(--accent); font-family: 'Playfair Display', serif; line-height: 1;">4+</div>
-            <div style="font-size: 0.78rem; color: var(--muted); margin-top: 0.25rem;">Domains Explored</div>
+  <main id="home">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="wrap hero-inner">
+        <div class="hero-copy">
+          <span class="eyebrow">Independent Creative / Nepal</span>
+          <h1 class="hero-title" id="hero-title">Stories that<br><span class="serif">move</span> people<span class="stroke">.</span></h1>
+          <p class="hero-summary">I’m Nikshep Karki — a video producer, graphic designer and digital strategist building visual stories with clarity, character and purpose.</p>
+          <div class="hero-actions">
+            <a class="button button-dark" href="#work">View selected work <span class="arrow">↗</span></a>
+            <a class="button button-text" href="#about">About me ↓</a>
           </div>
-          <div style="padding: 1.25rem; background: var(--card); border: 1px solid var(--border); border-radius: 12px;">
-            <div style="font-size: 2rem; font-weight: 900; color: var(--accent); font-family: 'Playfair Display', serif; line-height: 1;">12</div>
-            <div style="font-size: 0.78rem; color: var(--muted); margin-top: 0.25rem;">Core Skills</div>
+        </div>
+        <div class="ring" aria-hidden="true"></div>
+        <div class="scribble" aria-hidden="true">make it matter.</div>
+        <figure class="hero-portrait">
+          <img src="https://z-cdn-media.chatglm.cn/files/0dab2550-ee03-4e9d-8d06-038757e2910f.png?auth_key=1882924169-bc1972714228465ba9cc07b84e11e35e-0-e1aa92dc7c1fe4d4469b987151134556" alt="Portrait of Nikshep Karki" onerror="this.style.display='none'">
+          <figcaption class="portrait-label">Multimedia Journalist<strong>Creative direction / 2026</strong></figcaption>
+        </figure>
+        <div class="hero-index"><b>01</b><span>Portfolio<br>Overview</span></div>
+        <div class="hero-scroll">Scroll to explore</div>
+      </div>
+    </section>
+
+    <section class="proof" aria-label="Professional summary">
+      <div class="wrap proof-row">
+        <p class="proof-lead">Visual work designed to be <em>remembered.</em></p>
+        <div class="proof-item"><strong class="proof-number">08+</strong><span class="proof-label">Years creating</span></div>
+        <div class="proof-item"><strong class="proof-number">04</strong><span class="proof-label">Creative disciplines</span></div>
+        <div class="proof-item"><strong class="proof-number">∞</strong><span class="proof-label">Stories to tell</span></div>
+      </div>
+    </section>
+
+    <section class="intro" id="about">
+      <div class="wrap intro-grid">
+        <aside><span class="section-no">01 — About</span></aside>
+        <div>
+          <span class="eyebrow">Creative with direction</span>
+          <h2 class="intro-heading">Good design earns attention.<br><em>Great work earns trust.</em></h2>
+          <p class="intro-text">From cinematic video and editorial graphics to digital campaigns, I bring storytelling and strategy into the same frame. My work is informed by real audiences, strong ideas and an eye for the details that make communication feel human.</p>
+          <div class="service-list" id="work">
+            <div class="service">Video production <span>01</span></div>
+            <div class="service">Graphic design <span>02</span></div>
+            <div class="service">Digital campaigns <span>03</span></div>
+            <div class="service">Creative strategy <span>04</span></div>
           </div>
         </div>
       </div>
-    </div>
-  </div>
-</section>
+    </section>
+  </main>
 
-<!-- Recent Project Highlight -->
-<section class="relative z-10 py-16" style="background: linear-gradient(180deg, transparent, rgba(232,93,58,0.02), transparent);">
-  <div class="max-w-7xl mx-auto px-6">
-    <div class="reveal">
-      <p class="section-label">Recent Project</p>
-      <h2 class="section-heading font-display">Featured Work</h2>
-    </div>
+  <footer class="footer" id="contact">
+    <div class="wrap footer-row"><span>© 2026 Nikshep Karki</span><a href="mailto:hello@nikshepkarki.com.np">hello@nikshepkarki.com.np ↗</a><span>Kathmandu, Nepal</span></div>
+  </footer>
 
-    <div class="project-card featured-card reveal reveal-d1 mt-8" tabindex="0" role="article" aria-label="Magne Raja film marketing project">
-      <img
-        src="https://z-cdn-media.chatglm.cn/files/5ed90f3e-3a81-47a3-b059-49e9558022d8.jpg?auth_key=1882924728-7e4a1a85402e418c8d5feeb204a1ddbc-0-f93c63e2c41d932b91f86730e069132f"
-        alt="Magne Raja digital team group photo at cinema hall"
-        loading="eager"
-      >
-      <div class="project-overlay">
-        <span class="project-tag">Entertainment & Digital Marketing</span>
-        <h3 class="project-title font-display">Magne Raja — Nepali Feature Film</h3>
-        <p class="project-desc">
-          As the Digital Marketing Head, I led the film's promotional campaign — producing engaging promotional content, trailers, posters, and social media creatives. I managed daily content scheduling and audience engagement across digital platforms, building online visibility and anticipation before release.
-        </p>
-        <div class="project-meta">
-          <div class="meta-item">
-            <span class="meta-label">Role</span>
-            <span class="meta-value">Digital Marketing Head</span>
-          </div>
-          <div class="meta-item">
-            <span class="meta-label">Type</span>
-            <span class="meta-value">Feature Film Promotion</span>
-          </div>
-          <div class="meta-item">
-            <span class="meta-label">Deliverables</span>
-            <span class="meta-value">Trailers, Posters, Social Creatives</span>
-          </div>
-        </div>
-      </div>
-      <div class="project-arrow"><i class="fa-solid fa-arrow-up-right-from-square"></i></div>
-    </div>
-
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mt-5">
-      <div class="project-card reveal reveal-d2" tabindex="0" role="article" aria-label="LamjungKhabar news production">
-        <img src="https://picsum.photos/seed/lamjung-news/800/500.jpg" alt="Digital news production" loading="lazy">
-        <div class="project-overlay">
-          <span class="project-tag">Digital Media</span>
-          <h3 class="project-title font-display">News Video Production</h3>
-          <p class="project-desc">Produced high-quality news videos and editorial graphics for LamjungKhabar, CNNKhabar, and TilichoNews.</p>
-        </div>
-        <div class="project-arrow"><i class="fa-solid fa-arrow-up-right-from-square"></i></div>
-      </div>
-      <div class="project-card reveal reveal-d3" tabindex="0" role="article" aria-label="Political campaign work">
-        <img src="https://picsum.photos/seed/political-campaign-nepal/800/500.jpg" alt="Political campaign branding" loading="lazy">
-        <div class="project-overlay">
-          <span class="project-tag">Political Communications</span>
-          <h3 class="project-title font-display">Campaign of Prithvi Subba Gurung</h3>
-          <p class="project-desc">Directed digital communication strategy, produced campaign videos, and developed political branding materials.</p>
-        </div>
-        <div class="project-arrow"><i class="fa-solid fa-arrow-up-right-from-square"></i></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- Experience Section -->
-<section id="experience" class="relative z-10 py-28 md:py-36">
-  <div class="max-w-7xl mx-auto px-6">
-    <div class="grid grid-cols-1 lg:grid-cols-5 gap-16">
-      <div class="lg:col-span-2">
-        <div class="reveal" style="position: sticky; top: 120px;">
-          <p class="section-label">Career Path</p>
-          <h2 class="section-heading font-display">Professional<br>Experience</h2>
-          <p class="reveal reveal-d1" style="color: var(--muted); font-size: 0.92rem; margin-top: 1rem;">
-            From newsrooms to film sets, from political campaigns to student movements — a journey across Nepal's creative landscape.
-          </p>
-        </div>
-      </div>
-      <div class="lg:col-span-3">
-        <div class="timeline">
-          <div class="timeline-item reveal">
-            <div class="timeline-dot"></div>
-            <div class="timeline-role">Digital Media & News Production</div>
-            <h3 class="timeline-title font-display">Video Producer & Graphic Designer</h3>
-            <p class="timeline-org">LamjungKhabar.com &bull; CNNKhabar.com &bull; TilichoNews.com</p>
-            <ul class="timeline-list">
-              <li>Produced high-quality news videos and visual content for digital media platforms</li>
-              <li>Designed editorial graphics, breaking news visuals, and promotional materials</li>
-              <li>Maintained consistent visual identity across multiple news outlets</li>
-              <li>Collaborated with editorial teams to deliver engaging multimedia storytelling under tight deadlines</li>
-            </ul>
-          </div>
-          <div class="timeline-item reveal">
-            <div class="timeline-dot"></div>
-            <div class="timeline-role">Political Campaigns & Communications</div>
-            <h3 class="timeline-title font-display">Digital Campaign Lead</h3>
-            <p class="timeline-org">Campaign of Prithvi Subba Gurung</p>
-            <ul class="timeline-list">
-              <li>Directed the overall digital communication and social media strategy</li>
-              <li>Produced campaign videos, promotional reels, and political branding materials</li>
-              <li>Managed content planning and audience engagement across multiple platforms</li>
-              <li>Developed visual communication that strengthened campaign visibility and public outreach</li>
-            </ul>
-          </div>
-          <div class="timeline-item reveal">
-            <div class="timeline-dot"></div>
-            <div class="timeline-role">Political Campaigns & Communications</div>
-            <h3 class="timeline-title font-display">Freelance Political Designer</h3>
-            <p class="timeline-org">Various Nepali Political Leaders & Organizations</p>
-            <ul class="timeline-list">
-              <li>Designed campaign branding, social media creatives, posters, banners, and official communication materials</li>
-              <li>Delivered creative assets aligned with campaign objectives and public messaging</li>
-            </ul>
-          </div>
-          <div class="timeline-item reveal">
-            <div class="timeline-dot"></div>
-            <div class="timeline-role">Entertainment & Digital Marketing</div>
-            <h3 class="timeline-title font-display">Digital Marketing Head</h3>
-            <p class="timeline-org">Nepali Feature Film — Magne Raja</p>
-            <ul class="timeline-list">
-              <li>Led the digital marketing strategy for the film's promotional campaign</li>
-              <li>Produced engaging promotional content, trailers, posters, and social media creatives</li>
-              <li>Managed daily content scheduling and audience engagement across digital platforms</li>
-              <li>Contributed to building online visibility and audience anticipation before release</li>
-            </ul>
-          </div>
-          <div class="timeline-item reveal">
-            <div class="timeline-dot"></div>
-            <div class="timeline-role">Events & Organizational Media</div>
-            <h3 class="timeline-title font-display">Graphic Designer & Video Editor</h3>
-            <p class="timeline-org">ANNFSU Student Festival 2024</p>
-            <ul class="timeline-list">
-              <li>Designed promotional branding, event graphics, and digital marketing materials</li>
-              <li>Produced highlight videos, teaser content, and social media campaigns</li>
-              <li>Supported event promotion through cohesive visual communication</li>
-            </ul>
-          </div>
-          <div class="timeline-item reveal">
-            <div class="timeline-dot"></div>
-            <div class="timeline-role">Events & Organizational Media</div>
-            <h3 class="timeline-title font-display">Freelance Graphic Designer</h3>
-            <p class="timeline-org">ANNFSU (Student Union)</p>
-            <ul class="timeline-list">
-              <li>Created print and digital communication materials for organizational campaigns and events</li>
-              <li>Designed posters, banners, social media graphics, certificates, and promotional publications</li>
-              <li>Ensured consistent branding across various communication platforms</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- Skills Section -->
-<section id="skills" class="relative z-10 py-28 md:py-36" style="background: linear-gradient(180deg, transparent, rgba(232,93,58,0.02), transparent);">
-  <div class="max-w-7xl mx-auto px-6">
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-16">
-      <div>
-        <div class="reveal">
-          <p class="section-label">Core Expertise</p>
-          <h2 class="section-heading font-display">Skills &<br>Capabilities</h2>
-        </div>
-        <p class="reveal reveal-d1" style="color: var(--muted); font-size: 0.92rem; max-width: 440px;">
-          A diverse skill set built across multiple industries — from newsrooms and political arenas to entertainment and organizational branding.
-        </p>
-        <div class="flex flex-wrap gap-3 mt-8 reveal reveal-d2">
-          <span class="expertise-pill"><i class="fa-solid fa-video"></i> Video Production</span>
-          <span class="expertise-pill"><i class="fa-solid fa-palette"></i> Graphic Design</span>
-          <span class="expertise-pill"><i class="fa-solid fa-fingerprint"></i> Brand Identity</span>
-          <span class="expertise-pill"><i class="fa-solid fa-bullhorn"></i> Social Media Marketing</span>
-          <span class="expertise-pill"><i class="fa-solid fa-chart-line"></i> Digital Campaign Strategy</span>
-          <span class="expertise-pill"><i class="fa-solid fa-film"></i> Motion Graphics</span>
-          <span class="expertise-pill"><i class="fa-solid fa-eye"></i> Visual Storytelling</span>
-          <span class="expertise-pill"><i class="fa-solid fa-landmark"></i> Political Communication</span>
-          <span class="expertise-pill"><i class="fa-solid fa-newspaper"></i> News Media Production</span>
-          <span class="expertise-pill"><i class="fa-solid fa-pen-nib"></i> Content Creation</span>
-          <span class="expertise-pill"><i class="fa-solid fa-wand-magic-sparkles"></i> Creative Direction</span>
-          <span class="expertise-pill"><i class="fa-solid fa-globe"></i> Digital Branding</span>
-        </div>
-      </div>
-      <div class="flex flex-col gap-7 reveal reveal-d2">
-        <div class="skill-item" data-percent="95">
-          <div class="flex justify-between items-baseline mb-2">
-            <span style="font-weight: 500; font-size: 0.92rem;">Video Editing</span>
-            <span style="color: var(--muted); font-size: 0.78rem;">95%</span>
-          </div>
-          <div class="skill-bar-track"><div class="skill-bar-fill"></div></div>
-        </div>
-        <div class="skill-item" data-percent="85">
-          <div class="flex justify-between items-baseline mb-2">
-            <span style="font-weight: 500; font-size: 0.92rem;">Graphic Design</span>
-            <span style="color: var(--muted); font-size: 0.78rem;">85%</span>
-          </div>
-          <div class="skill-bar-track"><div class="skill-bar-fill"></div></div>
-        </div>
-        <div class="skill-item" data-percent="88">
-          <div class="flex justify-between items-baseline mb-2">
-            <span style="font-weight: 500; font-size: 0.92rem;">Digital Marketing Strategy</span>
-            <span style="color: var(--muted); font-size: 0.78rem;">88%</span>
-          </div>
-          <div class="skill-bar-track"><div class="skill-bar-fill"></div></div>
-        </div>
-        <div class="skill-item" data-percent="90">
-          <div class="flex justify-between items-baseline mb-2">
-            <span style="font-weight: 500; font-size: 0.92rem;">Visual Storytelling</span>
-            <span style="color: var(--muted); font-size: 0.78rem;">90%</span>
-          </div>
-          <div class="skill-bar-track"><div class="skill-bar-fill"></div></div>
-        </div>
-        <div class="skill-item" data-percent="82">
-          <div class="flex justify-between items-baseline mb-2">
-            <span style="font-weight: 500; font-size: 0.92rem;">Brand Identity Design</span>
-            <span style="color: var(--muted); font-size: 0.78rem;">82%</span>
-          </div>
-          <div class="skill-bar-track"><div class="skill-bar-fill"></div></div>
-        </div>
-        <div class="skill-item" data-percent="80">
-          <div class="flex justify-between items-baseline mb-2">
-            <span style="font-weight: 500; font-size: 0.92rem;">Motion Graphics</span>
-            <span style="color: var(--muted); font-size: 0.78rem;">80%</span>
-          </div>
-          <div class="skill-bar-track"><div class="skill-bar-fill"></div></div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- Tools Section -->
-<section id="tools" class="relative z-10 py-28 md:py-36">
-  <div class="max-w-7xl mx-auto px-6">
-    <div class="text-center mb-14">
-      <div class="reveal">
-        <p class="section-label" style="justify-content: center;">Software & Creative Tools</p>
-        <h2 class="section-heading font-display">My toolkit</h2>
-      </div>
-    </div>
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-5">
-      <div class="tool-card reveal reveal-d1">
-        <span class="tool-icon"><i class="fa-solid fa-image"></i></span>
-        <div class="tool-name">Adobe Photoshop</div>
-        <div class="tool-type">Photo Editing & Design</div>
-      </div>
-      <div class="tool-card reveal reveal-d2">
-        <span class="tool-icon"><i class="fa-solid fa-film"></i></span>
-        <div class="tool-name">Adobe Premiere Pro</div>
-        <div class="tool-type">Video Editing</div>
-      </div>
-      <div class="tool-card reveal reveal-d3">
-        <span class="tool-icon"><i class="fa-solid fa-sun"></i></span>
-        <div class="tool-name">Adobe Lightroom</div>
-        <div class="tool-type">Photo Processing</div>
-      </div>
-      <div class="tool-card reveal reveal-d4">
-        <span class="tool-icon"><i class="fa-solid fa-wand-magic-sparkles"></i></span>
-        <div class="tool-name">Canva Pro</div>
-        <div class="tool-type">Quick Design & Social</div>
-      </div>
-    </div>
-    <div class="philosophy-quote reveal mt-20 max-w-3xl mx-auto">
-      <p style="font-size: 1.05rem; line-height: 1.8; color: var(--fg); position: relative; z-index: 1;">
-        I believe that great design is more than aesthetics — it is purposeful communication. Every project begins with understanding the audience, identifying the message, and crafting visual experiences that create lasting impact. My goal is to transform ideas into meaningful designs that connect people, strengthen brands, and tell stories with clarity and creativity.
-      </p>
-      <p class="mt-4" style="font-size: 0.82rem; color: var(--accent); font-weight: 500; letter-spacing: 0.05em;">
-        — Creative Philosophy
-      </p>
-    </div>
-  </div>
-</section>
-
-<!-- Contact Section -->
-<section id="contact" class="relative z-10 py-28 md:py-36" style="background: linear-gradient(180deg, transparent, rgba(232,93,58,0.02), transparent);">
-  <div class="max-w-7xl mx-auto px-6">
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-16">
-      <div>
-        <div class="reveal">
-          <p class="section-label">Get in Touch</p>
-          <h2 class="section-heading font-display">Let's create<br>something great</h2>
-        </div>
-        <p class="reveal reveal-d1" style="color: var(--muted); font-size: 0.95rem; margin-bottom: 2rem; max-width: 440px;">
-          Whether you need cinematic video production, impactful graphic design, or a strategic digital marketing campaign — I'd love to hear about your project.
-        </p>
-        <div class="reveal reveal-d2 flex flex-col gap-4">
-          <div class="flex items-center gap-3" style="color: var(--muted); font-size: 0.9rem;">
-            <i class="fa-solid fa-location-dot" style="color: var(--accent); width: 20px; text-align: center;"></i>
-            Lamjung & Kathmandu, Nepal
-          </div>
-          <div class="flex items-center gap-3" style="color: var(--muted); font-size: 0.9rem;">
-            <i class="fa-solid fa-briefcase" style="color: var(--accent); width: 20px; text-align: center;"></i>
-            Available for Freelance & Contract
-          </div>
-          <div class="flex gap-5 mt-4">
-            <a href="mailto:info.nikshepkarki@gmail.com" class="footer-link text-lg" aria-label="Email"><i class="fa-solid fa-envelope"></i></a>
-            <a href="https://www.facebook.com/nikshepkarki.np" target="_blank" class="footer-link text-lg" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
-            <a href="#" class="footer-link text-lg" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
-            <a href="#" class="footer-link text-lg" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
-            <a href="#" class="footer-link text-lg" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
-          </div>
-        </div>
-      </div>
-      <div class="reveal reveal-d2">
-        <form id="contactForm" novalidate>
-          <div class="flex flex-col gap-4">
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <input type="text" name="name" class="form-input" placeholder="Your Name" required>
-              <input type="email" name="email" class="form-input" placeholder="Your Email" required>
-            </div>
-            <input type="text" name="subject" class="form-input" placeholder="Subject">
-            <select name="service" class="form-input" required>
-              <option value="" disabled selected>What do you need?</option>
-              <option value="video">Video Production</option>
-              <option value="design">Graphic Design</option>
-              <option value="marketing">Digital Marketing</option>
-              <option value="branding">Brand Identity</option>
-              <option value="other">Other</option>
-            </select>
-            <textarea name="message" class="form-input" rows="5" placeholder="Tell me about your project..." required style="resize: vertical; min-height: 120px;"></textarea>
-            <button type="submit" class="btn-primary" style="width: 100%; justify-content: center;">
-              Send Message <i class="fa-solid fa-paper-plane text-sm"></i>
-            </button>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- Footer -->
-<footer class="relative z-10 py-12" style="border-top: 1px solid var(--border);">
-  <div class="max-w-7xl mx-auto px-6">
-    <div class="flex flex-col md:flex-row items-center justify-between gap-6">
-      <div class="flex items-center gap-6">
-        <a href="#hero" style="color: var(--fg); text-decoration: none; font-weight: 700; font-size: 1.1rem; letter-spacing: -0.01em;">
-          NK<span style="color: var(--accent);">.</span>
-        </a>
-        <span style="color: var(--muted); font-size: 0.78rem;">© 2025 Nikshep Karki. All rights reserved.</span>
-      </div>
-      <div class="flex items-center gap-6">
-        <a href="#about" class="footer-link">About</a>
-        <a href="#experience" class="footer-link">Experience</a>
-        <a href="#skills" class="footer-link">Skills</a>
-        <a href="https://www.nikshepkarki.com.np/contact.html" class="footer-link">Contact</a>
-      </div>
-    </div>
-  </div>
-</footer>
-
-<!-- Toast Notification -->
-<div class="toast" id="toast">
-  <i class="fa-solid fa-check-circle"></i>
-  <span id="toastMsg">Message sent successfully!</span>
-</div>
-
-<script>
-(function() {
-  // --- Theme Toggle ---
-  const html = document.documentElement;
-  const themeIcon = document.getElementById('themeIcon');
-  const themeIconMobile = document.getElementById('themeIconMobile');
-  const themeText = document.getElementById('themeText');
-
-  function setTheme(theme) {
-    html.setAttribute('data-theme', theme);
-    localStorage.setItem('theme', theme);
-    const iconClass = theme === 'light' ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
-    const label = theme === 'light' ? 'Light Theme' : 'Dark Theme';
-    if (themeIcon) themeIcon.className = iconClass;
-    if (themeIconMobile) themeIconMobile.className = iconClass;
-    if (themeText) themeText.textContent = label;
-  }
-
-  const saved = localStorage.getItem('theme');
-  if (saved) setTheme(saved);
-  else if (window.matchMedia('(prefers-color-scheme: light)').matches) setTheme('light');
-
-  document.getElementById('themeToggle').addEventListener('click', function() {
-    setTheme(html.getAttribute('data-theme') === 'light' ? 'dark' : 'light');
-  });
-  document.getElementById('themeToggleMobile').addEventListener('click', function() {
-    setTheme(html.getAttribute('data-theme') === 'light' ? 'dark' : 'light');
-  });
-
-  // --- Mobile Menu ---
-  const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-  const mobileMenu = document.getElementById('mobileMenu');
-  let menuOpen = false;
-
-  window.closeMobileMenu = function() {
-    menuOpen = false;
-    mobileMenu.style.maxHeight = '0';
-    mobileMenuBtn.innerHTML = '<i class="fa-solid fa-bars"></i>';
-  };
-
-  mobileMenuBtn.addEventListener('click', function() {
-    menuOpen = !menuOpen;
-    mobileMenu.style.maxHeight = menuOpen ? mobileMenu.scrollHeight + 'px' : '0';
-    mobileMenuBtn.innerHTML = menuOpen ? '<i class="fa-solid fa-xmark"></i>' : '<i class="fa-solid fa-bars"></i>';
-  });
-
-  // --- Nav Scroll Effect ---
-  const mainNav = document.getElementById('mainNav');
-  window.addEventListener('scroll', function() {
-    mainNav.classList.toggle('scrolled', window.scrollY > 50);
-  });
-
-  // --- Active Nav Link ---
-  const sections = document.querySelectorAll('section[id]');
-  const navLinks = document.querySelectorAll('.nav-link[href^="#"]');
-
-  function updateActiveLink() {
-    let current = '';
-    sections.forEach(function(section) {
-      const top = section.offsetTop - 150;
-      if (window.scrollY >= top) current = section.getAttribute('id');
+  <script>
+    const button = document.querySelector('#menuButton');
+    const menu = document.querySelector('#mobileMenu');
+    button.addEventListener('click', () => {
+      const opened = menu.classList.toggle('is-open');
+      button.setAttribute('aria-expanded', opened);
+      button.setAttribute('aria-label', opened ? 'Close menu' : 'Open menu');
     });
-    navLinks.forEach(function(link) {
-      link.classList.remove('active');
-      if (link.getAttribute('href') === '#' + current) link.classList.add('active');
-    });
-  }
-
-  window.addEventListener('scroll', updateActiveLink);
-  updateActiveLink();
-
-  // --- Cursor Glow ---
-  const glow = document.getElementById('cursorGlow');
-  let mouseX = 0, mouseY = 0, glowX = 0, glowY = 0;
-
-  document.addEventListener('mousemove', function(e) {
-    mouseX = e.clientX;
-    mouseY = e.clientY;
-  });
-
-  function animateGlow() {
-    glowX += (mouseX - glowX) * 0.08;
-    glowY += (mouseY - glowY) * 0.08;
-    glow.style.left = glowX + 'px';
-    glow.style.top = glowY + 'px';
-    requestAnimationFrame(animateGlow);
-  }
-  animateGlow();
-
-  // Hide glow on touch devices
-  if ('ontouchstart' in window) glow.style.opacity = '0';
-
-  // --- Scroll Reveal ---
-  const reveals = document.querySelectorAll('.reveal');
-  const revealObserver = new IntersectionObserver(function(entries) {
-    entries.forEach(function(entry) {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-      }
-    });
-  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
-
-  reveals.forEach(function(el) { revealObserver.observe(el); });
-
-  // --- Skill Bars ---
-  const skillItems = document.querySelectorAll('.skill-item');
-  const skillObserver = new IntersectionObserver(function(entries) {
-    entries.forEach(function(entry) {
-      if (entry.isIntersecting) {
-        const percent = entry.target.getAttribute('data-percent');
-        const fill = entry.target.querySelector('.skill-bar-fill');
-        if (fill) fill.style.width = percent + '%';
-      }
-    });
-  }, { threshold: 0.3 });
-
-  skillItems.forEach(function(item) { skillObserver.observe(item); });
-
-  // --- Particle Canvas ---
-  const canvas = document.getElementById('particle-canvas');
-  const ctx = canvas.getContext('2d');
-  let particles = [];
-  const PARTICLE_COUNT = 50;
-
-  function resizeCanvas() {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-  }
-  resizeCanvas();
-  window.addEventListener('resize', resizeCanvas);
-
-  function Particle() {
-    this.x = Math.random() * canvas.width;
-    this.y = Math.random() * canvas.height;
-    this.size = Math.random() * 1.5 + 0.3;
-    this.speedX = (Math.random() - 0.5) * 0.3;
-    this.speedY = (Math.random() - 0.5) * 0.3;
-    this.opacity = Math.random() * 0.4 + 0.1;
-  }
-
-  for (let i = 0; i < PARTICLE_COUNT; i++) {
-    particles.push(new Particle());
-  }
-
-  function drawParticles() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    const isLight = html.getAttribute('data-theme') === 'light';
-    const color = isLight ? '180, 160, 140' : '120, 100, 80';
-
-    particles.forEach(function(p) {
-      p.x += p.speedX;
-      p.y += p.speedY;
-
-      if (p.x < 0) p.x = canvas.width;
-      if (p.x > canvas.width) p.x = 0;
-      if (p.y < 0) p.y = canvas.height;
-      if (p.y > canvas.height) p.y = 0;
-
-      ctx.beginPath();
-      ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-      ctx.fillStyle = 'rgba(' + color + ',' + p.opacity + ')';
-      ctx.fill();
-    });
-
-    // Draw connections
-    for (let i = 0; i < particles.length; i++) {
-      for (let j = i + 1; j < particles.length; j++) {
-        const dx = particles[i].x - particles[j].x;
-        const dy = particles[i].y - particles[j].y;
-        const dist = Math.sqrt(dx * dx + dy * dy);
-        if (dist < 120) {
-          ctx.beginPath();
-          ctx.moveTo(particles[i].x, particles[i].y);
-          ctx.lineTo(particles[j].x, particles[j].y);
-          ctx.strokeStyle = 'rgba(' + color + ',' + (0.06 * (1 - dist / 120)) + ')';
-          ctx.lineWidth = 0.5;
-          ctx.stroke();
-        }
-      }
-    }
-
-    requestAnimationFrame(drawParticles);
-  }
-
-  if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    drawParticles();
-  }
-
-  // --- Contact Form ---
-  const form = document.getElementById('contactForm');
-  const toast = document.getElementById('toast');
-  const toastMsg = document.getElementById('toastMsg');
-
-  form.addEventListener('submit', function(e) {
-    e.preventDefault();
-    const name = form.querySelector('[name="name"]').value.trim();
-    const email = form.querySelector('[name="email"]').value.trim();
-    const message = form.querySelector('[name="message"]').value.trim();
-
-    if (!name || !email || !message) {
-      toastMsg.textContent = 'Please fill in all required fields.';
-      toast.classList.add('show');
-      setTimeout(function() { toast.classList.remove('show'); }, 3000);
-      return;
-    }
-
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      toastMsg.textContent = 'Please enter a valid email address.';
-      toast.classList.add('show');
-      setTimeout(function() { toast.classList.remove('show'); }, 3000);
-      return;
-    }
-
-    toastMsg.textContent = 'Message sent successfully! I\'ll get back to you soon.';
-    toast.classList.add('show');
-    form.reset();
-    setTimeout(function() { toast.classList.remove('show'); }, 4000);
-  });
-})();
-</script>
+    menu.querySelectorAll('a').forEach(link => link.addEventListener('click', () => {
+      menu.classList.remove('is-open'); button.setAttribute('aria-expanded', 'false');
+    }));
+  </script>
 </body>
 </html>
